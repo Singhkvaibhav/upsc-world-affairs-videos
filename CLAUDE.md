@@ -119,11 +119,27 @@ One 300 s episode per month, numbered `M2612`, `M2701`, …: a headline sheet, s
 Re-run the research for the episode. If nothing material has changed, just push a new **As of** month in the YouTube description. If something has changed (a new ruling, a deal signed, a summit held), write the changed narration lines into the script under "Refresh <month year>", push, and stop for the user's `/approve N`. Then re-render the episode and its Short with the new "As of" date, replace the files in `output/`, and add "Updated <month year>" to the YouTube title.
 
 ## Delivering each episode
-- `output/WaNN_<Short_Title>.mp4` and `output/WaNN.srt`
-- `output/shorts/WaNN_short.mp4` (1080×1920, 30 fps, captions burnt in)
+- The files listed under **Bilingual audio** below (video with English and Hindi tracks, the Hindi track alone, two subtitle files, two Shorts)
 - `output/youtube/WaNN.txt`: title, description (with an "As of <month year>" line and the Sources list), chapters, and a short title and description for the Short with #Shorts. Plus `WaNN_thumb.png`: a designed thumbnail (a big two-ink headline and one simple riso motif, **without** the caption box or corner tag). Check that every thumbnail is a real image and not blank.
 - Long videos: 1920×1080, 30 fps, `libx264 -preset veryfast -crf 20`, yuv420p, AAC 192k, `-movflags +faststart`
 - Commit and push each finished episode, with its Short, as soon as it's ready. If you work on a branch, keep one open pull request and tell the user the branch name.
+
+## Bilingual audio: English and Hindi (this section overrides any earlier caption rules)
+Every long video has **two audio tracks, English and Hindi**, on one video, using YouTube's multi-language audio. The user chose this on 8 November 2026.
+
+1. **Captions are not burnt in** on long videos any more. Drop the caption box, and deliver two subtitle files instead: `output/WaNN.en.srt` and `output/WaNN.hi.srt`. Still keep the bottom 140 px free of important content, because YouTube draws its own subtitles there.
+2. **Scripts are bilingual.** Under each episode's long-video table, add a table headed `#### Hindi narration (हिंदी)` with the same Time rows and a Narration column in Hindi; do the same under the Short table. Write natural spoken Hindi, the way a good Hindi-medium UPSC teacher speaks, not word-for-word translation. Use standard Hindi terms from NCERT Hindi books and the Hindi text of the Constitution and government documents. The first time a technical term appears, say the Hindi term followed by the English one (for example "स्थायी सिंधु आयोग, यानी Permanent Indus Commission"). Keep names of organisations, treaties and acronyms (BRICS, WTO, IPCC) recognisable. The user approves both languages together, and approved Hindi narration is used word for word, like the English.
+3. **On-screen text stays in English** (it's the language of the exam's key terms), so keep on-screen text to short labels. Memory tips should work in both languages (initials, numbers, places); the Hindi narration explains them in Hindi.
+4. **Hindi voice:** use the Piper voice `hi_IN-priyamvada-medium` (or `hi_IN-pratham-medium` if that sounds clearer). Both live in the official `rhasspy/piper-voices` collection on Hugging Face, which is usually blocked here. In `setup.sh`, try the official download; if it's blocked, look for the voice as an asset on a GitHub release of this repo (tag `voices`); if neither works, **stop and ask the user** to download `hi_IN-priyamvada-medium.onnx` and `.onnx.json` from huggingface.co/rhasspy/piper-voices and attach them, then upload them to a `voices` release so later sessions can fetch them. Read the voice's model card, and tell the user its licence before the first Hindi render.
+5. **One timeline for both languages.** Run TTS for both. Each beat lasts as long as the **longer** of its English and Hindi lines, plus its pause, so the visuals fit both tracks; the shorter track gets extra silence. Keep the total exactly 300 s by shrinking pauses. If it still doesn't fit, don't speed speech up beyond 1.08×: shorten the Hindi wording instead and flag the change for the user's approval.
+6. **Two mixes.** Build `mix_en.wav` and `mix_hi.wav` with the identical music and sound-effect bed, so only the voice differs. Write the Hindi subtitle file with Devanagari text; install Noto Sans Devanagari (`fonts-noto-core` or the Noto fonts on GitHub) for anything drawn in Hindi.
+7. **Files to deliver for each episode:**
+   - `output/WaNN_<Short_Title>.mp4`: video with the English audio as the main track and the Hindi audio as a second track (`-map 0:v -map 1:a -map 2:a -metadata:s:a:0 language=eng -metadata:s:a:1 language=hin`)
+   - `output/hindi/WaNN.hi.m4a`: the Hindi track alone (AAC 192k, exactly the video's length), which the user uploads in YouTube Studio under Languages → Add language → Hindi → Dub
+   - `output/WaNN.en.srt` and `output/WaNN.hi.srt`
+   - in `output/youtube/WaNN.txt`: a Hindi title and description as well as the English ones
+8. **Shorts come in two versions,** because Shorts don't take a second audio track well: `output/shorts/WaNN_short.mp4` (English, English captions burnt in) and `output/shorts/WaNN_short_hi.mp4` (Hindi, Hindi captions in Devanagari burnt in).
+9. **QA** checks both audio tracks are present and exactly 300 s, both subtitle files exist, the Hindi Short exists, and the Hindi subtitles are real Devanagari (not boxes or question marks).
 
 ## Setup notes
 - Run `bash setup.sh` once. It installs pycairo, piper-tts and numpy, and downloads the narrator voice from **GitHub releases** to `voice/`. Hugging Face is usually blocked, so don't try it.

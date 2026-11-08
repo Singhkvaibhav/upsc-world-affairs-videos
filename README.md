@@ -1,6 +1,6 @@
 # India and the World, Simply Briefed
 
-Animated 5-minute briefings on current international relations for UPSC: 40 episodes in 6 units, each with a vertical YouTube Short, plus a monthly "World This Month" episode from December 2026. Printed in a two-ink risograph style with lively motion (camera moves, map fly-ins, flowing rivers, kinetic type). Maps of India follow the official Survey of India depiction, and facts come from Indian and official sources. Every episode answers what happened, why it matters for India, and how UPSC will ask it; stamps a memory tip into a briefing passport; and adds a thread to a growing web of India's relations.
+Animated 5-minute briefings, with English and Hindi audio on every video, on current international relations for UPSC: 40 episodes in 6 units, each with a vertical YouTube Short, plus a monthly "World This Month" episode from December 2026. Printed in a two-ink risograph style with lively motion (camera moves, map fly-ins, flowing rivers, kinetic type). Maps of India follow the official Survey of India depiction, and facts come from Indian and official sources. Every episode answers what happened, why it matters for India, and how UPSC will ask it; stamps a memory tip into a briefing passport; and adds a thread to a growing web of India's relations.
 
 Because the news moves, every script is researched fresh, shows an "As of" date, lists its sources, and has a refresh-by date.
 
