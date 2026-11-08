@@ -130,7 +130,7 @@ Re-run the research for the episode. If nothing material has changed, just push 
 - The files listed under **Bilingual audio** below (video with English and Hindi tracks, the Hindi track alone, two subtitle files, two Shorts)
 - `output/youtube/WaNN.txt`: title, description (with an "As of <month year>" line and the Sources list), chapters, and a short title and description for the Short with #Shorts. Plus `WaNN_thumb.png`: a designed thumbnail (a big two-ink headline and one simple riso motif, **without** the caption box or corner tag). Check that every thumbnail is a real image and not blank.
 - Long videos: 1920×1080, 30 fps, `libx264 -preset veryfast -crf 20`, yuv420p, AAC 192k, `-movflags +faststart`
-- **Videos go on GitHub releases, not into git:** the premium encode is over GitHub's 100 MB file limit, so `output/*.mp4` is ignored. Upload each finished long video and Short as assets on the repo's release `episodes` (create it if missing) with `gh release upload episodes <file> --clobber`. Subtitles, the Hindi `.m4a`, YouTube text and thumbnails stay in git.
+- **Keep every file under GitHub's 100 MB limit:** after assembling, if the long video is over 95 MB, re-encode it with two-pass x264 at `-b:v 2000k -preset slow` (audio `-b:a 160k`), which keeps flat graphics sharp at about 85 MB. Releases can't be created from these sessions.
 - Commit and push each finished episode, with its Short, as soon as it's ready. If you work on a branch, keep one open pull request and tell the user the branch name.
 
 ## Bilingual audio: English and Hindi (this section overrides any earlier caption rules)
