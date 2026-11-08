@@ -9,7 +9,10 @@ from engine.web import passport_stamp, relations_web
 EP = 1
 TITLE = 'The_Indus_Waters_Treaty_in_Abeyance'
 NAME = 'The Indus Waters Treaty in abeyance'
-EXTRA = {'hook': 1.0, 'tip': 2.5, 'end': 3.0}
+EXTRA = {'hook': .5, 'tip': 1.0, 'end': 1.5}
+VOICE_EN = {'length': 0.98, 'noise': (0.72, 0.85), 'gaps': (0.38, 0.22)}   # brighter, more energetic delivery
+VOICE_HI = {'length': 0.86, 'noise': (0.72, 0.85), 'gaps': (0.38, 0.22)}
+CRF, PRESET = 17, 'medium'                                                # premium encode
 
 # ---------- schematic river board (no boundaries; swapped for the official Survey of India map when supplied) ----------
 RIVERS = {   # name: (points, side)
@@ -88,11 +91,11 @@ def s_rivers(ctx, t, D):
     a = ba
     ctx.save(); camera(ctx, t, D, (1.0, 1.05), cy=600)
     le = ease(seg(t, T('The three eastern rivers'), T('The three eastern rivers') + .8))
-    lw = ease(seg(t, T('The three western rivers'), T('The three western rivers') + .8))
+    lw = ease(seg(t, T('The three western ones'), T('The three western ones') + .8))
     river_board(ctx, t, a, 4.0, {'east': le, 'west': lw})
     q = pop(t, T('The three eastern rivers') + .6)
-    if q > 0: tag(ctx, 1450, 640, 'EASTERN RIVERS → INDIA', R['teal'], ease(seg(t, T('The three eastern rivers')+.6, T('The three eastern rivers')+1))*a, 30)
-    q2 = seg(t, T('The three western rivers') + .6, T('The three western rivers') + 1)
+    if q > 0: tag(ctx, 1370, 640, 'EASTERN RIVERS → INDIA', R['teal'], ease(seg(t, T('The three eastern rivers')+.6, T('The three eastern rivers')+1))*a, 30)
+    q2 = seg(t, T('The three western ones') + .6, T('The three western ones') + 1)
     if q2 > 0: tag(ctx, 100, 560, 'WESTERN RIVERS → PAKISTAN', R['coral'], ease(q2)*a, 30)
     q3 = seg(t, T('in limited ways'), T('in limited ways') + .5)
     if q3 > 0: tag(ctx, 100, 640, 'INDIA: LIMITED USE, E.G. RUN-OF-RIVER HYDROPOWER', R['char'], ease(q3)*a, 20)
@@ -105,8 +108,8 @@ def s_ladder(ctx, t, D):
     cable(ctx, t, 'HOW DISPUTES ARE SETTLED', a, EP)
     river_board(ctx, 100, a, 0, {'east': 1, 'west': 1}, dim=.25)
     steps = [('PERMANENT INDUS COMMISSION', 'one commissioner from each country', 'Permanent Indus Commission'),
-             ('NEUTRAL EXPERT', 'for technical differences', 'then a Neutral Expert'),
-             ('COURT OF ARBITRATION', 'for legal disputes', 'then a Court of Arbitration')]
+             ('NEUTRAL EXPERT', 'for technical differences', 'Step two'),
+             ('COURT OF ARBITRATION', 'for legal disputes', 'Step three')]
     ctx.save(); camera(ctx, t, D, (1.0, 1.04))
     for i, (head, sub, cue) in enumerate(steps):
         t0 = T(cue); q = seg(t, t0, t0 + .6)
@@ -187,7 +190,7 @@ def s_award(ctx, t, D):
         riso(ctx, lambda: (ctx.move_to(bx-280, by-260-40*(1-rp)), ctx.line_to(bx+280, by-260-40*(1-rp)), ctx.line_to(bx, by-380-40*(1-rp)), ctx.close_path()), R['coral'], a*rp, second=R['teal'])
     tq = seg(t, T('issued an interim award'), T('issued an interim award') + .5)
     if tq > 0: tag(ctx, bx, by + 90, 'INTERIM AWARD · 31 AUG 2026', R['char'], ease(tq)*a, 26, align='c')
-    lq = seg(t, T("It said India"), T("It said India") + .6)
+    lq = seg(t, T("Its message"), T("Its message") + .6)
     if lq > 0:
         riso(ctx, lambda: rrect(ctx, 960, 180, 840, 200, 14), R['paper'], ease(lq)*a)
         rgba(ctx, R['char'], ease(lq)*a); ctx.set_line_width(3); rrect(ctx, 960, 180, 840, 200, 14); ctx.stroke()
@@ -221,79 +224,107 @@ def _motif_hook(ctx, t, D, a):
     ctx.restore()
 
 # ---------- beats ----------
+_TL = [('1951', 'Talks begin, with the World Bank as broker', R['teal'], 'nine long years', 300),
+       ('1960', 'Signed in Karachi: Nehru and Ayub Khan', R['coral'], 'signed the treaty in Karachi', 860),
+       ('1965', 'War: the treaty survives', R['teal'], 99, 1420), ('1971', 'War: the treaty survives', R['teal'], 99, 1980),
+       ('1999', 'Kargil: the treaty survives', R['teal'], 99, 2540), ('2025', 'After Pahalgam: held in abeyance', R['coral'], 99, 3100),
+       ('2026', 'Court of Arbitration award', R['char'], 99, 3660)]
+_TL2 = [(y, c, i, (-5 if y in ('1951', '1960') else {'1965': 'wars of 1965', '1971': 'and 1971', '1999': 'Kargil', '2025': 'in April 2025'}.get(y, 99)), x) for y, c, i, _, x in _TL]
+_STANDS = [('INDIA SAYS', ['In abeyance until Pakistan credibly and irrevocably abjures its support for cross-border terrorism', 'The court was set up in breach of the treaty; it has no jurisdiction', 'India has never appeared before it'], R['teal']),
+           ('PAKISTAN SAYS', ['The treaty remains fully in force and binding', 'India must comply with the treaty and its dispute decisions'], R['coral'])]
+
 BEATS = [
- ('hook', "At the end of August 2026, a Court of Arbitration said India's reasons were not enough to suspend a treaty it had put on hold sixteen months earlier. India rejected the award the same day. The treaty is the Indus Waters Treaty. Why does it matter for India?",
+ ('hook', "Sixteen months ago, India put a sixty-six-year-old treaty on hold. Then, at the end of August 2026, a Court of Arbitration said India's reasons were not enough to suspend it. India's answer? Rejected, the very same day. This is the Indus Waters Treaty. So why does it matter so much for India? Let's find out.",
   headline([('A TREATY', R['teal']), ('ON HOLD', R['coral'])], 'INDUS WATERS TREATY · 1960',
-           question=('Why does it matter for India?', 'Why does it matter'), motif=_motif_hook)),
- ('back1', "The Indus Waters Treaty was signed in Karachi in September 1960 by Prime Minister Jawaharlal Nehru and Pakistan's President Ayub Khan, after about nine years of talks brokered by the World Bank.",
-  timeline([('1951', 'Talks begin, with the World Bank as broker', R['teal'], 'nine years of talks', 300),
-            ('1960', 'Signed in Karachi: Nehru and Ayub Khan', R['coral'], 'signed in Karachi', 860),
-            ('1965', 'War: the treaty survives', R['teal'], 99, 1420), ('1971', 'War: the treaty survives', R['teal'], 99, 1980),
-            ('1999', 'Kargil: the treaty survives', R['teal'], 99, 2540), ('2025', 'After Pahalgam: held in abeyance', R['coral'], 99, 3100),
-            ('2026', 'Court of Arbitration award', R['char'], 99, 3660)], (700, 1000))),
- ('back2', "It survived the wars of 1965 and 1971, and the Kargil conflict of 1999. Then, in April 2025, after a terror attack in Pahalgam killed twenty-six people, India announced that the treaty would be held in abeyance.",
-  timeline([('1951', 'Talks begin, with the World Bank as broker', R['teal'], -5, 300),
-            ('1960', 'Signed in Karachi: Nehru and Ayub Khan', R['coral'], -5, 860),
-            ('1965', 'War: the treaty survives', R['teal'], 'wars of 1965', 1420), ('1971', 'War: the treaty survives', R['teal'], 'and 1971', 1980),
-            ('1999', 'Kargil: the treaty survives', R['teal'], 'Kargil', 2540), ('2025', 'After Pahalgam: held in abeyance', R['coral'], 'in April 2025', 3100),
-            ('2026', 'Court of Arbitration award', R['char'], 99, 3660)], (1000, 3000))),
- ('rivers', "The treaty divides the six rivers of the Indus basin. The three eastern rivers, the Ravi, the Beas and the Sutlej, are for India's unrestricted use. The three western rivers, the Indus, the Jhelum and the Chenab, go to Pakistan, though India may use them in limited ways, such as run-of-the-river hydropower.", s_rivers),
- ('ladder', "The treaty also set up a Permanent Indus Commission, with one commissioner from each country, and a three-step way to settle disputes: the Commission, then a Neutral Expert, then a Court of Arbitration.", s_ladder),
- ('since', "Since April 2025, India has flushed sediment from dams on the Chenab and sped up hydropower projects such as Pakal Dul and Ratle.", s_since),
- ('award', "Then, on the thirty-first of August 2026, a Court of Arbitration under the treaty issued an interim award. It said India's grounds were not enough to suspend the treaty, and it limited some construction at Ratle for now.", s_award),
- ('india', "Here is where each side stands. India says the treaty stays in abeyance until Pakistan credibly and irrevocably abjures its support for cross-border terrorism. It says the court was set up in breach of the treaty and has no jurisdiction, and India has never appeared before it.",
-  stands([('INDIA SAYS', ['In abeyance until Pakistan credibly and irrevocably abjures its support for cross-border terrorism', 'The court was set up in breach of the treaty; it has no jurisdiction', 'India has never appeared before it'], R['teal']),
-          ('PAKISTAN SAYS', ['The treaty remains fully in force and binding', 'India must comply with the treaty and its dispute decisions'], R['coral'])],
-         ['India says', 999])),
- ('pak', "Pakistan says the award shows the treaty remains fully in force and binding, and that India must comply with it.",
-  stands([('INDIA SAYS', ['In abeyance until Pakistan credibly and irrevocably abjures its support for cross-border terrorism', 'The court was set up in breach of the treaty; it has no jurisdiction', 'India has never appeared before it'], R['teal']),
-          ('PAKISTAN SAYS', ['The treaty remains fully in force and binding', 'India must comply with the treaty and its dispute decisions'], R['coral'])],
-         [-5, 'Pakistan says'])),
- ('stakes', "What is India's stake? First, security: India links the treaty to its fight against cross-border terrorism. Second, energy: fuller use of the western rivers means more hydropower for Jammu and Kashmir. Third, precedent: India is downstream of China on the Brahmaputra, so it has its own interest in how river agreements are read.",
-  stakes([('shield', 'SECURITY', 'Linked to the fight against cross-border terrorism', R['teal'], 'First, security'),
-          ('turbine', 'ENERGY', 'More hydropower for Jammu and Kashmir', R['coral'], 'Second, energy'),
-          ('rivers', 'PRECEDENT', 'Downstream of China on the Brahmaputra', R['over'], 'Third, precedent')])),
- ('tip', "Here is your passport stamp. East is R-B-S: Ravi, Beas, Sutlej, for India. West is I-J-C: Indus, Jhelum, Chenab, for Pakistan. And the year is nineteen sixty, with the World Bank as the broker.",
-  passport_stamp(['EAST  RBS → INDIA', 'WEST  IJC → PAKISTAN', '1960 · WORLD BANK'], EP, 1.6, ['East is', 'West is', 'And the year'], 'INDUS WATERS')),
- ('q1', "Exam desk. Statement one: the treaty gives India unrestricted use of the Chenab. False. The Chenab is a western river; India's unrestricted rights are on the Ravi, Beas and Sutlej.",
-  statement(1, 'The Indus Waters Treaty gives India unrestricted use of the Chenab.', 'FALSE', "The Chenab is a western river. India's unrestricted rights: Ravi, Beas, Sutlej.", 'False.')),
- ('q2', "Statement two: the treaty was brokered by the World Bank. True.",
-  statement(2, 'The Indus Waters Treaty was brokered by the World Bank.', 'TRUE', 'After about nine years of talks, signed in 1960.', 'True.')),
- ('mains', "In Mains, you might be asked whether water can be an instrument of foreign policy, with reference to the Indus Waters Treaty. Answer in three parts: the treaty and its record, India's security argument and Pakistan's legal argument, and the options ahead, from renegotiation to restoration.",
+           question=('Why does it matter for India?', 'So why does it matter'), motif=_motif_hook)),
+ ('back1', "Rewind to 1960. After nine long years of talks, brokered by the World Bank, Prime Minister Jawaharlal Nehru and Pakistan's President Ayub Khan signed the treaty in Karachi, that September.",
+  timeline(_TL, (700, 1000))),
+ ('back2', "And here's what makes it remarkable. It survived the wars of 1965 and 1971. It survived Kargil in 1999. But in April 2025, after a terror attack in Pahalgam killed twenty-six people, India took a step it had never taken before: it announced the treaty would be held in abeyance.",
+  timeline(_TL2, (1000, 3000))),
+ ('rivers', "So what does the treaty actually do? It splits six rivers. The three eastern rivers, the Ravi, the Beas and the Sutlej, are India's to use without limits. The three western ones, the Indus, the Jhelum and the Chenab, go to Pakistan. India can still use them, but only in limited ways, like run-of-the-river hydropower.", s_rivers),
+ ('ladder', "It also built a system to settle disputes. Step one: the Permanent Indus Commission, with one commissioner from each country. Step two: a Neutral Expert. Step three: a Court of Arbitration.", s_ladder),
+ ('since', "Now, fast-forward to today. Since April 2025, India has flushed sediment from its dams on the Chenab, and put hydropower projects like Pakal Dul and Ratle on the fast track.", s_since),
+ ('award', "Then came the twist. On the thirty-first of August 2026, the Court of Arbitration issued an interim award. Its message: India's grounds were not enough to suspend the treaty. And for now, it limited some construction at Ratle.", s_award),
+ ('india', "So, who says what? India's position is firm: the treaty stays in abeyance until Pakistan credibly and irrevocably abjures its support for cross-border terrorism. India says this court was set up in breach of the treaty, has no jurisdiction, and India has never appeared before it.",
+  stands(_STANDS, ["India's position", 999])),
+ ('pak', "Pakistan sees it the other way. It says the award shows the treaty is fully in force and binding, and that India must comply.",
+  stands(_STANDS, [-5, 'Pakistan sees'])),
+ ('stakes', "Now, why should you care? Because three big things are at stake for India. One: security. India ties this treaty directly to cross-border terrorism. Two: energy. Fuller use of the western rivers means more hydropower for Jammu and Kashmir. And three: precedent. On the Brahmaputra, India is the downstream country, below China. So how river treaties are read matters to India too.",
+  stakes([('shield', 'SECURITY', 'Tied to cross-border terrorism', R['teal'], 'One: security'),
+          ('turbine', 'ENERGY', 'More hydropower for Jammu and Kashmir', R['coral'], 'Two: energy'),
+          ('rivers', 'PRECEDENT', 'Downstream of China on the Brahmaputra', R['over'], 'And three: precedent')])),
+ ('tip', "Okay, memory time! Here's your passport stamp. East is R-B-S: Ravi, Beas, Sutlej, for India. West is I-J-C: Indus, Jhelum, Chenab, for Pakistan. And the year? Nineteen sixty, with the World Bank as broker. Say it with me: R-B-S east, I-J-C west!",
+  passport_stamp(['EAST  RBS → INDIA', 'WEST  IJC → PAKISTAN', '1960 · WORLD BANK'], EP, 'East is', ['East is', 'West is', 'And the year'], 'INDUS WATERS')),
+ ('q1', "Exam desk! True or false: the treaty gives India unrestricted use of the Chenab. Think about it. False! The Chenab is a western river. India's unrestricted rights are on the Ravi, Beas and Sutlej.",
+  statement(1, 'The Indus Waters Treaty gives India unrestricted use of the Chenab.', 'FALSE', "The Chenab is a western river. India's unrestricted rights: Ravi, Beas, Sutlej.", 'False!')),
+ ('q2', "Next one: the treaty was brokered by the World Bank. True! Easy marks, if you remember the stamp.",
+  statement(2, 'The Indus Waters Treaty was brokered by the World Bank.', 'TRUE', 'After about nine years of talks, signed in 1960.', 'True!')),
+ ('mains', "And for Mains, practise this one: can water be an instrument of foreign policy? Discuss with reference to the Indus Waters Treaty. Build your answer in three parts. First, the treaty and its record. Second, India's security argument and Pakistan's legal argument. Third, the options ahead, from renegotiation to restoration.",
   mains('Can water be an instrument of foreign policy? Discuss with reference to the Indus Waters Treaty.',
         [('The treaty and its record', '1960, World Bank, survived three wars'),
          ('The two arguments', "India's security argument · Pakistan's legal argument"),
          ('The options ahead', 'From renegotiation to restoration')],
-        ['the treaty and its record', "India's security argument", 'the options ahead'])),
- ('watch', "Three things to watch: whether the Permanent Indus Commission meets again, India's hydropower projects on the Chenab as they come online, and how both sides respond to the award, ahead of the Neutral Expert's decision on Ratle, expected in July 2027.",
+        ['First, the treaty', "Second, India's", 'Third, the options'])),
+ ('watch', "So, what should you watch next? Number one: does the Permanent Indus Commission meet again? Number two: India's hydropower projects on the Chenab, as they come online. And number three: the Neutral Expert's decision on Ratle, expected in July 2027.",
   watch([('Does the Permanent Indus Commission meet again?', 'OPEN QUESTION'),
          ('Hydropower projects on the Chenab', 'AS THEY COME ONLINE'),
          ("The Neutral Expert's decision on Ratle", 'EXPECTED JULY 2027')],
-        ['whether the Permanent', "India's hydropower", 'how both sides'])),
- ('end', "On the relations web, a new thread joins India and Pakistan: Indus Waters, in abeyance. Next briefing: India and Pakistan after Pahalgam.",
+        ['Number one', 'Number two', 'And number three'])),
+ ('end', "And with that, a new thread joins our relations web: India and Pakistan, Indus Waters, in abeyance. Next briefing: India and Pakistan after Pahalgam. See you there!",
   relations_web(EP, 'a new thread', 'INDIA AND PAKISTAN AFTER PAHALGAM', 'Next briefing')),
 ]
 
-# Hindi narration, beat by beat (English terms written in Devanagari so the Hindi voice says them clearly)
-HI = {
- 'hook': "अगस्त 2026 के आख़िर में, एक कोर्ट ऑफ़ आर्बिट्रेशन ने कहा कि भारत के कारण उस संधि को निलंबित करने के लिए काफ़ी नहीं हैं, जिसे भारत ने सोलह महीने पहले स्थगित कर दिया था। भारत ने उसी दिन यह फ़ैसला ख़ारिज कर दिया। यह संधि है सिंधु जल संधि। भारत के लिए यह क्यों अहम है?",
- 'back1': "सिंधु जल संधि पर सितंबर 1960 में कराची में हस्ताक्षर हुए। भारत के प्रधानमंत्री जवाहरलाल नेहरू और पाकिस्तान के राष्ट्रपति अयूब ख़ान ने इस पर दस्तख़त किए, विश्व बैंक की मध्यस्थता में लगभग नौ साल चली बातचीत के बाद।",
- 'back2': "यह संधि 1965 और 1971 के युद्धों, और 1999 के करगिल संघर्ष में भी बनी रही। फिर अप्रैल 2025 में, पहलगाम के आतंकी हमले में छब्बीस लोगों की जान जाने के बाद, भारत ने घोषणा की कि यह संधि स्थगित रखी जाएगी।",
- 'rivers': "यह संधि सिंधु बेसिन की छह नदियों को बाँटती है। तीन पूर्वी नदियाँ, यानी रावी, ब्यास और सतलुज, भारत के बिना रोक-टोक इस्तेमाल के लिए हैं। तीन पश्चिमी नदियाँ, यानी सिंधु, झेलम और चिनाब, पाकिस्तान को मिली हैं, हालाँकि भारत इनका सीमित इस्तेमाल कर सकता है, जैसे रन-ऑफ़-द-रिवर पनबिजली।",
- 'ladder': "संधि ने एक स्थायी सिंधु आयोग, यानी परमानेंट इंडस कमीशन, भी बनाया, जिसमें दोनों देशों का एक-एक आयुक्त होता है। विवाद सुलझाने के तीन कदम तय हुए: पहले आयोग, फिर एक तटस्थ विशेषज्ञ, और फिर एक कोर्ट ऑफ़ आर्बिट्रेशन।",
- 'since': "अप्रैल 2025 के बाद से, भारत ने चिनाब पर बने बाँधों से गाद निकाली है, और पाकल दुल और रतले जैसी पनबिजली परियोजनाओं का काम तेज़ किया है।",
- 'award': "फिर इकतीस अगस्त 2026 को, संधि के तहत बने एक कोर्ट ऑफ़ आर्बिट्रेशन ने एक अंतरिम फ़ैसला दिया। उसने कहा कि संधि को निलंबित करने के लिए भारत के आधार काफ़ी नहीं हैं, और फ़िलहाल रतले में कुछ निर्माण पर रोक लगाई।",
- 'india': "अब देखते हैं कि किसका क्या कहना है। भारत का कहना है कि संधि तब तक स्थगित रहेगी, जब तक पाकिस्तान सीमा-पार आतंकवाद को अपना समर्थन विश्वसनीय और अपरिवर्तनीय रूप से छोड़ नहीं देता। भारत के अनुसार यह कोर्ट संधि का उल्लंघन करके बनाया गया, इसका कोई अधिकार-क्षेत्र नहीं है, और भारत कभी इसके सामने पेश नहीं हुआ।",
- 'pak': "पाकिस्तान का कहना है कि यह फ़ैसला दिखाता है कि संधि पूरी तरह लागू और बाध्यकारी है, और भारत को इसका पालन करना चाहिए।",
- 'stakes': "इसमें भारत का क्या दाँव पर है? पहला, सुरक्षा: भारत इस संधि को सीमा-पार आतंकवाद के ख़िलाफ़ अपनी लड़ाई से जोड़ता है। दूसरा, ऊर्जा: पश्चिमी नदियों के बेहतर इस्तेमाल से जम्मू-कश्मीर को ज़्यादा पनबिजली मिल सकती है। तीसरा, मिसाल: ब्रह्मपुत्र पर भारत, चीन के निचले हिस्से में है, इसलिए नदी समझौतों को कैसे पढ़ा जाता है, इसमें उसकी अपनी रुचि भी है।",
- 'tip': "यह रहा आपका पासपोर्ट स्टैम्प। पूरब है आर-बी-एस: रावी, ब्यास, सतलुज, भारत के लिए। पश्चिम है आई-जे-सी: इंडस यानी सिंधु, झेलम, चिनाब, पाकिस्तान के लिए। और साल है उन्नीस सौ साठ, विश्व बैंक की मध्यस्थता में।",
- 'q1': "अब परीक्षा डेस्क। पहला कथन: संधि भारत को चिनाब के बिना रोक-टोक इस्तेमाल का अधिकार देती है। ग़लत। चिनाब एक पश्चिमी नदी है; भारत के पूरे अधिकार रावी, ब्यास और सतलुज पर हैं।",
- 'q2': "दूसरा कथन: इस संधि में विश्व बैंक ने मध्यस्थता की थी। सही।",
- 'mains': "मेन्स में पूछा जा सकता है कि क्या पानी विदेश नीति का एक साधन हो सकता है, सिंधु जल संधि के संदर्भ में। जवाब तीन हिस्सों में लिखिए: संधि और उसका रिकॉर्ड, भारत का सुरक्षा तर्क और पाकिस्तान का क़ानूनी तर्क, और आगे के विकल्प, पुनर्वार्ता से लेकर बहाली तक।",
- 'watch': "तीन बातों पर नज़र रखिए: क्या स्थायी सिंधु आयोग की फिर से बैठक होती है; चिनाब पर भारत की पनबिजली परियोजनाएँ, जैसे-जैसे वे शुरू होती हैं; और दोनों पक्ष इस फ़ैसले पर कैसी प्रतिक्रिया देते हैं, रतले पर तटस्थ विशेषज्ञ के फ़ैसले से पहले, जो जुलाई 2027 में आने की उम्मीद है।",
- 'end': "रिलेशन्स वेब पर, भारत और पाकिस्तान के बीच एक नया धागा जुड़ता है: सिंधु जल, स्थगित। अगली ब्रीफ़िंग: पहलगाम के बाद भारत और पाकिस्तान।",
+# scenes in the same group continue without a wipe
+GROUPS = {'back1': 'tl', 'back2': 'tl', 'india': 'st', 'pak': 'st'}
+
+# keyword pop-ups, synced to the English narration: beat -> [(phrase, label, ink)]
+KEYS = {
+ 'hook': [('Sixteen months', '16 MONTHS ON HOLD', 'coral'), ('Rejected', 'REJECTED', 'teal')],
+ 'back1': [('nine long years', '9 YEARS OF TALKS', 'teal')],
+ 'back2': [('twenty-six people', '26 LIVES LOST', 'coral'), ('never taken before', 'A FIRST', 'teal')],
+ 'rivers': [('without limits', 'UNRESTRICTED', 'teal'), ('limited ways', 'LIMITED USE', 'coral')],
+ 'since': [('fast track', 'FAST-TRACKED', 'teal')],
+ 'award': [('the twist', 'THE TWIST', 'coral')],
+ 'stakes': [('three big things', '3 THINGS AT STAKE', 'coral')],
+ 'tip': [('Say it with me', 'RBS EAST · IJC WEST', 'violet')],
+ 'q2': [('Easy marks', 'EASY MARKS', 'teal')],
 }
 
-FX = [('tick', 'hook', .15, .12), ('tick', 'back1', .15, .1), ('tick', 'rivers', .15, .1), ('tick', 'india', .15, .1),
-      ('tick', 'stakes', .15, .1), ('tick', 'q1', .15, .1), ('tick', 'watch', .15, .1),
-      ('stamp', 'tip', 1.6, .45), ('pluck', 'end', 'a new thread', .35)]
+# explainer marker annotations (screen coordinates): beat -> [(phrase, kind, x, y, w, h)]
+ANNOT = {
+ 'hook': [('on hold', 'underline', 130, 615, 640, 0)],
+ 'rivers': [('without limits', 'circle', 1590, 640, 500, 100), ('limited ways', 'arrow', 560, 700, 300, -180)],
+ 'award': [('Its message', 'underline', 990, 356, 520, 0), ('limited some construction', 'circle', 1650, 770, 420, 90)],
+ 'stakes': [('Brahmaputra', 'circle', 1540, 420, 330, 280)],
+ 'tip': [('Say it with me', 'underline', 1010, 505, 470, 0), ('Say it with me', 'underline', 990, 612, 520, 0)],
+ 'watch': [('July 2027', 'underline', 318, 814, 350, 0)],
+ 'since': [('Ratle', 'circle', 1640, 680, 230, 230)],
+}
+
+# Hindi narration, beat by beat (English terms written in Devanagari so the Hindi voice says them clearly)
+HI = {
+ 'hook': "सोलह महीने पहले, भारत ने छियासठ साल पुरानी एक संधि को स्थगित कर दिया। फिर अगस्त 2026 के आख़िर में, एक कोर्ट ऑफ़ आर्बिट्रेशन ने कहा कि भारत के कारण इसे निलंबित करने के लिए काफ़ी नहीं हैं। और भारत का जवाब? उसी दिन ख़ारिज! यह है सिंधु जल संधि। तो भारत के लिए यह इतनी अहम क्यों है? चलिए समझते हैं।",
+ 'back1': "चलिए 1960 में चलते हैं। विश्व बैंक की मध्यस्थता में, लगभग नौ साल की लंबी बातचीत के बाद, प्रधानमंत्री जवाहरलाल नेहरू और पाकिस्तान के राष्ट्रपति अयूब ख़ान ने उस सितंबर कराची में इस संधि पर हस्ताक्षर किए।",
+ 'back2': "और इसकी सबसे ख़ास बात? यह 1965 और 1971 के युद्धों में भी बनी रही। 1999 के करगिल संघर्ष में भी। लेकिन अप्रैल 2025 में, पहलगाम के आतंकी हमले में छब्बीस लोगों की जान जाने के बाद, भारत ने वह कदम उठाया जो पहले कभी नहीं उठाया था: उसने घोषणा की कि संधि स्थगित रखी जाएगी।",
+ 'rivers': "तो यह संधि असल में करती क्या है? यह छह नदियों को बाँटती है। तीन पूर्वी नदियाँ, यानी रावी, ब्यास और सतलुज, भारत के बिना रोक-टोक इस्तेमाल के लिए हैं। तीन पश्चिमी नदियाँ, यानी सिंधु, झेलम और चिनाब, पाकिस्तान को मिलीं। भारत इनका भी इस्तेमाल कर सकता है, लेकिन सीमित तरीक़ों से, जैसे रन-ऑफ़-द-रिवर पनबिजली।",
+ 'ladder': "संधि ने विवाद सुलझाने की एक व्यवस्था भी बनाई। पहला कदम: स्थायी सिंधु आयोग, यानी परमानेंट इंडस कमीशन, जिसमें दोनों देशों का एक-एक आयुक्त होता है। दूसरा कदम: एक तटस्थ विशेषज्ञ। तीसरा कदम: एक कोर्ट ऑफ़ आर्बिट्रेशन।",
+ 'since': "अब आते हैं आज पर। अप्रैल 2025 के बाद से, भारत ने चिनाब पर बने अपने बाँधों से गाद निकाली है, और पाकल दुल और रतले जैसी पनबिजली परियोजनाओं को तेज़ रफ़्तार दी है।",
+ 'award': "और फिर आया बड़ा मोड़। इकतीस अगस्त 2026 को, कोर्ट ऑफ़ आर्बिट्रेशन ने एक अंतरिम फ़ैसला दिया। उसका संदेश: संधि को निलंबित करने के लिए भारत के आधार काफ़ी नहीं हैं। और फ़िलहाल, उसने रतले में कुछ निर्माण पर रोक लगाई।",
+ 'india': "तो किसका क्या कहना है? भारत का रुख़ दृढ़ है: संधि तब तक स्थगित रहेगी, जब तक पाकिस्तान सीमा-पार आतंकवाद को अपना समर्थन विश्वसनीय और अपरिवर्तनीय रूप से छोड़ नहीं देता। भारत का कहना है कि यह कोर्ट संधि का उल्लंघन करके बनाया गया, इसका कोई अधिकार-क्षेत्र नहीं है, और भारत कभी इसके सामने पेश नहीं हुआ।",
+ 'pak': "पाकिस्तान इसे दूसरी तरह देखता है। उसका कहना है कि यह फ़ैसला दिखाता है कि संधि पूरी तरह लागू और बाध्यकारी है, और भारत को इसका पालन करना चाहिए।",
+ 'stakes': "अब सवाल यह, कि आपको इसकी परवाह क्यों करनी चाहिए? क्योंकि भारत के लिए तीन बड़ी चीज़ें दाँव पर हैं। एक: सुरक्षा। भारत इस संधि को सीधे सीमा-पार आतंकवाद से जोड़ता है। दो: ऊर्जा। पश्चिमी नदियों के बेहतर इस्तेमाल से जम्मू-कश्मीर को ज़्यादा पनबिजली मिल सकती है। और तीन: मिसाल। ब्रह्मपुत्र पर भारत, चीन के नीचे, निचले हिस्से का देश है। इसलिए नदी समझौतों को कैसे पढ़ा जाता है, यह भारत के लिए भी मायने रखता है।",
+ 'tip': "तो चलिए, याद करने का समय! यह रहा आपका पासपोर्ट स्टैम्प। पूरब है आर-बी-एस: रावी, ब्यास, सतलुज, भारत के लिए। पश्चिम है आई-जे-सी: इंडस यानी सिंधु, झेलम, चिनाब, पाकिस्तान के लिए। और साल? उन्नीस सौ साठ, विश्व बैंक की मध्यस्थता में। मेरे साथ बोलिए: आर-बी-एस पूरब, आई-जे-सी पश्चिम!",
+ 'q1': "परीक्षा डेस्क! सही या ग़लत: संधि भारत को चिनाब के बिना रोक-टोक इस्तेमाल का अधिकार देती है। सोचिए। ग़लत! चिनाब एक पश्चिमी नदी है। भारत के पूरे अधिकार रावी, ब्यास और सतलुज पर हैं।",
+ 'q2': "अगला: इस संधि में विश्व बैंक ने मध्यस्थता की थी। सही! स्टैम्प याद है, तो ये नंबर पक्के।",
+ 'mains': "और मेन्स के लिए, यह सवाल अभ्यास कीजिए: क्या पानी विदेश नीति का एक साधन हो सकता है? सिंधु जल संधि के संदर्भ में चर्चा कीजिए। जवाब तीन हिस्सों में बनाइए। पहला, संधि और उसका रिकॉर्ड। दूसरा, भारत का सुरक्षा तर्क और पाकिस्तान का क़ानूनी तर्क। तीसरा, आगे के विकल्प, पुनर्वार्ता से लेकर बहाली तक।",
+ 'watch': "तो आगे किन बातों पर नज़र रखें? नंबर एक: क्या स्थायी सिंधु आयोग की फिर से बैठक होती है? नंबर दो: चिनाब पर भारत की पनबिजली परियोजनाएँ, जैसे-जैसे वे शुरू होती हैं। और नंबर तीन: रतले पर तटस्थ विशेषज्ञ का फ़ैसला, जो जुलाई 2027 में आने की उम्मीद है।",
+ 'end': "और इसके साथ, हमारे रिलेशन्स वेब में एक नया धागा जुड़ता है: भारत और पाकिस्तान, सिंधु जल, स्थगित। अगली ब्रीफ़िंग: पहलगाम के बाद भारत और पाकिस्तान। वहाँ मिलते हैं!",
+}
+
+# sound: whoosh on every wipe, blip on every pop-up, stamp, riser, verdict dings, pluck
+_order = [k for k, _, _ in BEATS]
+FX = [('whoosh', k, -.25, .22) for i, k in enumerate(_order) if i and GROUPS.get(k, k) != GROUPS.get(_order[i-1], _order[i-1])]
+FX += [('blip', k, ph, .16) for k, items in KEYS.items() for ph, _, _ in items]
+FX += [('whoosh', k, ph, .06) for k, items in ANNOT.items() for ph, *_ in items]   # soft marker swish
+FX += [('tick', 'hook', .15, .12), ('riser', 'tip', 'East is', .2), ('stamp', 'tip', 'East is', .5),
+       ('ding', 'q1', 'False!', .3), ('ding', 'q2', 'True!', .3), ('pluck', 'end', 'a new thread', .35)]

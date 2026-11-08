@@ -22,31 +22,48 @@ def voice_track(tl, d):
 
 def hz(n): return 440*2**((n-69)/12)
 
-def bed():
+def bed(bpm=100):
+    """original upbeat bed: soft kick, shaker, bass and a marimba arpeggio over warm pads (Dm - Bb - F - C)"""
     t = np.arange(N)/SR
     out = np.zeros(N, np.float32)
-    # low pad: two soft sine chords, slow swell (Dm9 - Bbmaj7 - Fmaj7 - C6)
-    chords = [[38, 50, 53, 57, 64], [34, 50, 53, 57, 62], [41, 48, 52, 57, 60], [36, 48, 52, 55, 57]]
-    CL = 12.0
-    for ci in range(int(TOTAL/CL)+2):
-        s0 = ci*CL-2; i0, i1 = max(0, int(s0*SR)), min(N, int((s0+CL+4)*SR))
-        if i0 >= i1: continue
-        tt = t[i0:i1]-s0; env = np.clip(tt/4, 0, 1)*np.clip((CL+4-tt)/4, 0, 1); env = env*env*(3-2*env)
-        seg = np.zeros(i1-i0, np.float32)
-        for n in chords[ci % 4]: seg += np.sin(2*np.pi*hz(n)*t[i0:i1]).astype(np.float32)*(0.6 if n < 45 else 0.35)
-        out[i0:i1] += seg*env*0.5
-    # muted marimba: pentatonic notes every ~0.75 s, gentle
+    beat = 60/bpm; bar = 4*beat
+    chords = [[50, 53, 57, 62], [46, 50, 53, 58], [53, 57, 60, 65], [48, 52, 55, 60]]
+    roots = [38, 34, 41, 36]
     rng = np.random.default_rng(4)
-    scale = [62, 65, 67, 69, 72, 74, 77]
-    step = 0.75; L = int(1.2*SR); tt = np.arange(L)/SR
-    for k in range(int(TOTAL/step)):
-        if rng.random() < 0.45: continue
-        n = scale[rng.integers(len(scale))]; f = hz(n)
-        note = (np.sin(2*np.pi*f*tt) + .3*np.sin(2*np.pi*4*f*tt)*np.exp(-tt*25))*np.exp(-tt*6)
-        i0 = int(k*step*SR); j = min(L, N-i0)
-        out[i0:i0+j] += note[:j].astype(np.float32)*rng.uniform(.25, .45)
+    # pads, one chord per 2 bars
+    CL = 2*bar
+    for ci in range(int(TOTAL/CL)+2):
+        s0 = ci*CL; i0, i1 = int(s0*SR), min(N, int((s0+CL+1.5)*SR))
+        if i0 >= N: break
+        tt = t[i0:i1]-s0; env = np.clip(tt/1.2, 0, 1)*np.clip((CL+1.5-tt)/1.5, 0, 1)
+        sig = np.zeros(i1-i0, np.float32)
+        for n in chords[ci % 4]:
+            for det in (-.15, .15): sig += np.sin(2*np.pi*(hz(n)+det)*t[i0:i1]).astype(np.float32)
+        out[i0:i1] += .10*sig*env
+    def put(sig, at, g):
+        i0 = int(at*SR); j = min(len(sig), N-i0)
+        if j > 0: out[i0:i0+j] += sig[:j].astype(np.float32)*g
+    kt = np.arange(int(.35*SR))/SR
+    kick = np.sin(2*np.pi*(48 + 70*np.exp(-kt*30))*kt)*np.exp(-kt*9)
+    st = np.arange(int(.08*SR))/SR
+    nb = int(TOTAL/beat)
+    for k in range(nb):
+        at = k*beat; ci = int(at/CL) % 4
+        if k % 4 in (0, 2): put(kick, at, .55)
+        for h in (0, .5):   # shaker on 8ths
+            sh = rng.standard_normal(len(st))*np.exp(-st*55); sh = np.diff(sh, prepend=0)
+            put(sh, at + h*beat, .07 if h else .045)
+        # bass on beats 1 and 3
+        if k % 4 in (0, 2):
+            bt = np.arange(int(beat*1.6*SR))/SR
+            put(np.sin(2*np.pi*hz(roots[ci])*bt)*np.exp(-bt*2.2), at, .32)
+        # marimba arpeggio, 8ths, chord tones up an octave
+        for h in (0, .5):
+            n = chords[ci][(2*k + int(h*2)) % 4] + 12
+            mt = np.arange(int(.6*SR))/SR; f = hz(n)
+            put((np.sin(2*np.pi*f*mt) + .25*np.sin(2*np.pi*4*f*mt)*np.exp(-mt*30))*np.exp(-mt*9), at + h*beat, .16 if (2*k+int(h*2)) % 4 == 0 else .10)
     out /= np.max(np.abs(out))
-    fade = np.clip(t/3, 0, 1)*np.clip((TOTAL-t)/4, 0, 1)
+    fade = np.clip(t/2, 0, 1)*np.clip((TOTAL-t)/3, 0, 1)
     return (out*fade).astype(np.float32)
 
 def fx_sound(kind):
@@ -65,13 +82,32 @@ def fx_sound(kind):
         for i in range(L):
             out[i] = buf[i % n]; buf[i % n] = .996*.5*(buf[i % n] + buf[(i+1) % n])
         return out
+    if kind == 'whoosh':    # filtered noise sweep
+        L = int(.55*SR); tt = np.arange(L)/SR; rng = np.random.default_rng(6)
+        n = rng.standard_normal(L); env = np.sin(np.pi*np.clip(tt/.55, 0, 1))**2
+        k = 1 + (10*(1 - tt/.55)).astype(int); y = np.zeros(L)
+        acc = 0.
+        for i in range(L):                     # one-pole lowpass with a sweeping cutoff
+            a_ = .04 + .5*(i/L); acc += a_*(n[i]-acc); y[i] = acc
+        return (y*env).astype(np.float32)
+    if kind == 'blip':      # soft pop for keyword stickers
+        tt = np.arange(int(.18*SR))/SR
+        return (np.sin(2*np.pi*(660 + 500*tt/.18)*tt)*np.exp(-tt*25)).astype(np.float32)
+    if kind == 'riser':     # 1.2 s rising tone into the stamp
+        tt = np.arange(int(1.2*SR))/SR; f = 220 + 440*(tt/1.2)**2
+        ph = 2*np.pi*np.cumsum(f)/SR; rng = np.random.default_rng(8)
+        return ((np.sin(ph) + .3*rng.standard_normal(len(tt))*(tt/1.2))*(tt/1.2)**1.5).astype(np.float32)
+    if kind == 'ding':      # bright two-note answer chime
+        tt = np.arange(int(1.2*SR))/SR
+        return (np.sin(2*np.pi*hz(84)*tt)*np.exp(-tt*4) + .6*np.sin(2*np.pi*hz(91)*np.clip(tt-.09, 0, None))*np.exp(-np.clip(tt-.09, 0, None)*4)*(tt > .09)).astype(np.float32)
     raise ValueError(kind)
 
 def effects(tl, spec):
     st = {b['k']: b['start'] for b in tl}; bb = {b['k']: b for b in tl}; out = np.zeros(N, np.float32)
     for kind, beat, off, gain in spec:
         if isinstance(off, str):   # a phrase in the English narration
-            b = bb[beat]; off = LEAD + b['vo']*b['narr'].find(off)/len(b['narr'])
+            b = bb[beat]; off = LEAD + b['vo']*b['narr'].find(off)/len(b['narr']) - .2
+        if kind == 'riser': off -= 1.2
         s = fx_sound(kind); s = s/np.max(np.abs(s))*gain
         i0 = int((st[beat]+off)*SR); j = min(len(s), N-i0); out[i0:i0+j] += s[:j]
     return out
@@ -112,8 +148,8 @@ def build2(tl, fx_spec, HI, name):
     for lang, d in (('en', 'vo'), ('hi', 'vo_hi')):
         v = voice_track(tl, d)
         env = np.convolve(np.abs(v), np.ones(4410)/4410, mode='same')
-        duck = 1 - 0.5*np.clip(env*12, 0, 1)
-        _write(f'mix_{lang}.wav', v + b0*0.07*duck + fx)
+        duck = 1 - 0.55*np.clip(env*12, 0, 1)
+        _write(f'mix_{lang}.wav', v + b0*0.11*duck + fx)
     srt(tl, {b['k']: b['narr'] for b in tl}, 'vo', f'{name}.en.srt')
     srt(tl, HI, 'vo_hi', f'{name}.hi.srt')
     print('ok two mixes', TOTAL)

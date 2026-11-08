@@ -72,6 +72,14 @@ The user wants **richer animation than the earlier series**. Static slides with 
 - **Speed.** Cache every static layer as an image; draw only what moves on each frame.
 - **Check motion, not just stills.** For each episode, also render a 15-second 540p preview of its busiest segment and look at 6 frames sampled 0.3 s apart, to confirm things actually move smoothly.
 
+## Tone and finish (the user asked for this on 8 November 2026)
+- **Enthusiastic, explainer-style narration.** Short sentences, direct questions to the viewer ("So why does it matter?", "Think about it."), a clear twist moment, numbered points ("One… Two… And three…"), and a "Say it with me" line for the memory tip. Stay factual and neutral: energy comes from pace and clarity, never from loaded words. Follow the Episode 1 script (`scripts/sample_ep01.md`) as the model.
+- **Delivery:** set `VOICE_EN = {'length': 0.98, 'noise': (0.72, 0.85), 'gaps': (0.38, 0.22)}` and `VOICE_HI = {'length': 0.86, ...}` in each `ep.py`, as in Episode 1.
+- **Explainer marker layer:** live-drawn coral marker circles, underlines and arrows over the key element as the narration reaches it (`ANNOT` in `ep.py`, drawn by `engine/fx.py`). Two to eight per episode. This borrows a common explainer technique; never copy any show's name, catchphrase, set or presenter.
+- **Keyword pop-ups:** bold ink stickers for the key number or term at the moment it's said (`KEYS` in `ep.py`), bottom right, above the subtitle area.
+- **Finish:** ink-wipe transitions between segments (`GROUPS` keeps continuous scenes together), film grain, moving light and vignette (all in `engine/fx.py`), and an upbeat original bed with whoosh, blip, riser, stamp and ding effects (`engine/bimix.py`).
+- **Encode:** `CRF, PRESET = 17, 'medium'` in each `ep.py`.
+
 ## Episode format (long video, exactly 300 s)
 | Time | Segment | Template |
 | --- | --- | --- |
@@ -84,7 +92,7 @@ The user wants **richer animation than the earlier series**. Static slides with 
 | 3:30–4:25 | Exam desk: two Prelims statements that flip to True or False with a one-line reason; then a Mains question with a three-part answer frame | EXAM |
 | 4:25–5:00 | Watchlist: three things to watch; a new thread is added to the relations web; "Next briefing: …" | WATCH, WEB |
 
-Narration is about 480–600 words per episode (the sample has about 560).
+Narration is about 520–650 words per episode (the sample has about 630), spoken briskly.
 
 ## Short format (vertical 1080×1920, about 45–55 s)
 | Time | What happens |
@@ -122,6 +130,7 @@ Re-run the research for the episode. If nothing material has changed, just push 
 - The files listed under **Bilingual audio** below (video with English and Hindi tracks, the Hindi track alone, two subtitle files, two Shorts)
 - `output/youtube/WaNN.txt`: title, description (with an "As of <month year>" line and the Sources list), chapters, and a short title and description for the Short with #Shorts. Plus `WaNN_thumb.png`: a designed thumbnail (a big two-ink headline and one simple riso motif, **without** the caption box or corner tag). Check that every thumbnail is a real image and not blank.
 - Long videos: 1920×1080, 30 fps, `libx264 -preset veryfast -crf 20`, yuv420p, AAC 192k, `-movflags +faststart`
+- **Videos go on GitHub releases, not into git:** the premium encode is over GitHub's 100 MB file limit, so `output/*.mp4` is ignored. Upload each finished long video and Short as assets on the repo's release `episodes` (create it if missing) with `gh release upload episodes <file> --clobber`. Subtitles, the Hindi `.m4a`, YouTube text and thumbnails stay in git.
 - Commit and push each finished episode, with its Short, as soon as it's ready. If you work on a branch, keep one open pull request and tell the user the branch name.
 
 ## Bilingual audio: English and Hindi (this section overrides any earlier caption rules)

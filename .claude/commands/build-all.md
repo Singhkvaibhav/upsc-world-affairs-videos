@@ -27,7 +27,7 @@ Start a **separate agent** that hasn't seen the scripts being written. Give it C
 - any source that isn't Indian or official (foreign news outlets are not allowed), and any other government's position not taken from its own official statement
 - any India map that isn't the official Survey of India depiction, and any flag, emblem, logo or leader's likeness in the Visual column
 - Hindi narration that is missing, doesn't match the English meaning, or uses non-standard terms
-- narration outside 480–600 words, or a missing memory tip, Where they stand, India's stake or exam desk
+- narration outside 520–650 words, or a missing memory tip, Where they stand, India's stake or exam desk
 
 Fix everything it finds in the scripts. Then set every scripted episode's Status to `scripted` in `scripts/episode_plan.md`, and add a line at the top of that file: "Scripts approved via /build-all after an independent fact-check, on <date>." Commit and push. Put a short summary of what the fact-check found and fixed in `scripts/factcheck_report.md`.
 

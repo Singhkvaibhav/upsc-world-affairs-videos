@@ -1,176 +1,300 @@
 1
-00:00:00,900 --> 00:00:02,621
-At the end of August 2026,
+00:00:00,900 --> 00:00:05,384
+Sixteen months ago, India put a sixty-six-year-old treaty on hold.
 
 2
-00:00:02,621 --> 00:00:10,459
-a Court of Arbitration said India's reasons were not enough to suspend a treaty it had put on hold sixteen months earlier.
+00:00:05,384 --> 00:00:12,611
+Then, at the end of August 2026, a Court of Arbitration said India's reasons were not enough to suspend it.
 
 3
-00:00:10,459 --> 00:00:12,944
-India rejected the award the same day.
+00:00:12,611 --> 00:00:13,682
+India's answer?
 
 4
-00:00:12,944 --> 00:00:15,429
-The treaty is the Indus Waters Treaty.
+00:00:13,682 --> 00:00:15,622
+Rejected, the very same day.
 
 5
-00:00:15,429 --> 00:00:17,641
-Why does it matter for India?
+00:00:15,622 --> 00:00:17,831
+This is the Indus Waters Treaty.
 
 6
-00:00:23,867 --> 00:00:31,918
-The Indus Waters Treaty was signed in Karachi in September 1960 by Prime Minister Jawaharlal Nehru and Pakistan's President Ayub Khan,
+00:00:17,831 --> 00:00:20,574
+So why does it matter so much for India?
 
 7
-00:00:31,918 --> 00:00:35,797
-after about nine years of talks brokered by the World Bank.
+00:00:20,574 --> 00:00:21,945
+Let's find out.
 
 8
-00:00:41,767 --> 00:00:47,290
-It survived the wars of 1965 and 1971, and the Kargil conflict of 1999.
+00:00:24,267 --> 00:00:25,265
+Rewind to 1960.
 
 9
-00:00:47,290 --> 00:00:53,504
-Then, in April 2025, after a terror attack in Pahalgam killed twenty-six people,
+00:00:25,265 --> 00:00:29,009
+After nine long years of talks, brokered by the World Bank,
 
 10
-00:00:53,504 --> 00:00:58,330
-India announced that the treaty would be held in abeyance.
+00:00:29,009 --> 00:00:36,360
+Prime Minister Jawaharlal Nehru and Pakistan's President Ayub Khan signed the treaty in Karachi, that September.
 
 11
-00:01:02,800 --> 00:01:06,239
-The treaty divides the six rivers of the Indus basin.
+00:00:39,600 --> 00:00:42,276
+And here's what makes it remarkable.
 
 12
-00:01:06,239 --> 00:01:12,288
-The three eastern rivers, the Ravi, the Beas and the Sutlej, are for India's unrestricted use.
+00:00:42,276 --> 00:00:45,098
+It survived the wars of 1965 and 1971.
 
 13
-00:01:12,288 --> 00:01:17,382
-The three western rivers, the Indus, the Jhelum and the Chenab, go to Pakistan,
+00:00:45,098 --> 00:00:47,123
+It survived Kargil in 1999.
 
 14
-00:01:17,382 --> 00:01:22,776
-though India may use them in limited ways, such as run-of-the-river hydropower.
+00:00:47,123 --> 00:00:52,838
+But in April 2025, after a terror attack in Pahalgam killed twenty-six people,
 
 15
-00:01:26,000 --> 00:01:31,215
-The treaty also set up a Permanent Indus Commission, with one commissioner from each country,
+00:00:52,838 --> 00:01:00,082
+India took a step it had never taken before: it announced the treaty would be held in abeyance.
 
 16
-00:01:31,215 --> 00:01:37,562
-and a three-step way to settle disputes: the Commission, then a Neutral Expert, then a Court of Arbitration.
+00:01:03,100 --> 00:01:05,326
+So what does the treaty actually do?
 
 17
-00:01:44,300 --> 00:01:52,558
-Since April 2025, India has flushed sediment from dams on the Chenab and sped up hydropower projects such as Pakal Dul and Ratle.
+00:01:05,326 --> 00:01:06,650
+It splits six rivers.
 
 18
-00:01:56,033 --> 00:02:02,196
-Then, on the thirty-first of August 2026, a Court of Arbitration under the treaty issued an interim award.
+00:01:06,650 --> 00:01:12,425
+The three eastern rivers, the Ravi, the Beas and the Sutlej, are India's to use without limits.
 
 19
-00:02:02,196 --> 00:02:09,063
-It said India's grounds were not enough to suspend the treaty, and it limited some construction at Ratle for now.
+00:01:12,425 --> 00:01:17,118
+The three western ones, the Indus, the Jhelum and the Chenab, go to Pakistan.
 
 20
-00:02:13,000 --> 00:02:14,855
-Here is where each side stands.
+00:01:17,118 --> 00:01:22,592
+India can still use them, but only in limited ways, like run-of-the-river hydropower.
 
 21
-00:02:14,855 --> 00:02:22,277
-India says the treaty stays in abeyance until Pakistan credibly and irrevocably abjures its support for cross-border terrorism.
+00:01:25,600 --> 00:01:28,411
+It also built a system to settle disputes.
 
 22
-00:02:22,277 --> 00:02:29,419
-It says the court was set up in breach of the treaty and has no jurisdiction, and India has never appeared before it.
+00:01:28,411 --> 00:01:33,836
+Step one: the Permanent Indus Commission, with one commissioner from each country.
 
 23
-00:02:37,800 --> 00:02:44,116
-Pakistan says the award shows the treaty remains fully in force and binding, and that India must comply with it.
+00:01:33,836 --> 00:01:35,666
+Step two: a Neutral Expert.
 
 24
-00:02:48,600 --> 00:02:50,074
-What is India's stake?
+00:01:35,666 --> 00:01:38,319
+Step three: a Court of Arbitration.
 
 25
-00:02:50,074 --> 00:02:55,520
-First, security: India links the treaty to its fight against cross-border terrorism.
+00:01:43,433 --> 00:01:45,174
+Now, fast-forward to today.
 
 26
-00:02:55,520 --> 00:03:01,544
-Second, energy: fuller use of the western rivers means more hydropower for Jammu and Kashmir.
+00:01:45,174 --> 00:01:49,775
+Since April 2025, India has flushed sediment from its dams on the Chenab,
 
 27
-00:03:01,544 --> 00:03:10,045
-Third, precedent: India is downstream of China on the Brahmaputra, so it has its own interest in how river agreements are read.
+00:01:49,775 --> 00:01:54,552
+and put hydropower projects like Pakal Dul and Ratle on the fast track.
 
 28
-00:03:16,333 --> 00:03:18,766
-Here is your passport stamp.
+00:01:55,800 --> 00:01:57,123
+Then came the twist.
 
 29
-00:03:18,766 --> 00:03:22,624
-East is R-B-S: Ravi, Beas, Sutlej, for India.
+00:01:57,123 --> 00:02:02,543
+On the thirty-first of August 2026, the Court of Arbitration issued an interim award.
 
 30
-00:03:22,624 --> 00:03:26,985
-West is I-J-C: Indus, Jhelum, Chenab, for Pakistan.
+00:02:02,543 --> 00:02:06,828
+Its message: India's grounds were not enough to suspend the treaty.
 
 31
-00:03:26,985 --> 00:03:32,904
-And the year is nineteen sixty, with the World Bank as the broker.
+00:02:06,828 --> 00:02:10,405
+And for now, it limited some construction at Ratle.
 
 32
-00:03:39,333 --> 00:03:40,133
-Exam desk.
+00:02:12,167 --> 00:02:13,290
+So, who says what?
 
 33
-00:03:40,133 --> 00:03:45,225
-Statement one: the treaty gives India unrestricted use of the Chenab.
+00:02:13,290 --> 00:02:14,827
+India's position is firm:
 
 34
-00:03:45,225 --> 00:03:45,734
-False.
+00:02:14,827 --> 00:02:21,745
+the treaty stays in abeyance until Pakistan credibly and irrevocably abjures its support for cross-border terrorism.
 
 35
-00:03:45,734 --> 00:03:52,798
-The Chenab is a western river; India's unrestricted rights are on the Ravi, Beas and Sutlej.
+00:02:21,745 --> 00:02:29,080
+India says this court was set up in breach of the treaty, has no jurisdiction, and India has never appeared before it.
 
 36
-00:03:55,567 --> 00:03:59,610
-Statement two: the treaty was brokered by the World Bank.
+00:02:33,800 --> 00:02:35,591
+Pakistan sees it the other way.
 
 37
-00:03:59,610 --> 00:04:00,329
-True.
+00:02:35,591 --> 00:02:41,153
+It says the award shows the treaty is fully in force and binding, and that India must comply.
 
 38
-00:04:03,167 --> 00:04:10,763
-In Mains, you might be asked whether water can be an instrument of foreign policy, with reference to the Indus Waters Treaty.
+00:02:45,200 --> 00:02:46,988
+Now, why should you care?
 
 39
-00:04:10,763 --> 00:04:17,213
-Answer in three parts: the treaty and its record, India's security argument and Pakistan's legal argument,
+00:02:46,988 --> 00:02:50,356
+Because three big things are at stake for India.
 
 40
-00:04:17,213 --> 00:04:21,010
-and the options ahead, from renegotiation to restoration.
+00:02:50,356 --> 00:02:51,388
+One: security.
 
 41
-00:04:23,800 --> 00:04:32,225
-Three things to watch: whether the Permanent Indus Commission meets again, India's hydropower projects on the Chenab as they come online,
+00:02:51,388 --> 00:02:55,444
+India ties this treaty directly to cross-border terrorism.
 
 42
-00:04:32,225 --> 00:04:39,424
-and how both sides respond to the award, ahead of the Neutral Expert's decision on Ratle, expected in July 2027.
+00:02:55,444 --> 00:02:56,338
+Two: energy.
 
 43
-00:04:44,667 --> 00:04:51,414
-On the relations web, a new thread joins India and Pakistan: Indus Waters, in abeyance.
+00:02:56,338 --> 00:03:01,701
+Fuller use of the western rivers means more hydropower for Jammu and Kashmir.
 
 44
-00:04:51,414 --> 00:04:55,547
+00:03:01,701 --> 00:03:03,213
+And three: precedent.
+
+45
+00:03:03,213 --> 00:03:07,751
+On the Brahmaputra, India is the downstream country, below China.
+
+46
+00:03:07,751 --> 00:03:11,695
+So how river treaties are read matters to India too.
+
+47
+00:03:16,067 --> 00:03:17,599
+Okay, memory time!
+
+48
+00:03:17,599 --> 00:03:19,857
+Here's your passport stamp.
+
+49
+00:03:19,857 --> 00:03:23,567
+East is R-B-S: Ravi, Beas, Sutlej, for India.
+
+50
+00:03:23,567 --> 00:03:27,760
+West is I-J-C: Indus, Jhelum, Chenab, for Pakistan.
+
+51
+00:03:27,760 --> 00:03:28,889
+And the year?
+
+52
+00:03:28,889 --> 00:03:32,680
+Nineteen sixty, with the World Bank as broker.
+
+53
+00:03:32,680 --> 00:03:36,206
+Say it with me: R-B-S east, I-J-C west!
+
+54
+00:03:41,100 --> 00:03:41,841
+Exam desk!
+
+55
+00:03:41,841 --> 00:03:46,558
+True or false: the treaty gives India unrestricted use of the Chenab.
+
+56
+00:03:46,558 --> 00:03:47,637
+Think about it.
+
+57
+00:03:47,637 --> 00:03:48,108
+False!
+
+58
+00:03:48,108 --> 00:03:50,197
+The Chenab is a western river.
+
+59
+00:03:50,197 --> 00:03:54,675
+India's unrestricted rights are on the Ravi, Beas and Sutlej.
+
+60
+00:03:56,400 --> 00:04:00,011
+Next one: the treaty was brokered by the World Bank.
+
+61
+00:04:00,011 --> 00:04:00,420
+True!
+
+62
+00:04:00,420 --> 00:04:03,377
+Easy marks, if you remember the stamp.
+
+63
+00:04:04,600 --> 00:04:09,788
+And for Mains, practise this one: can water be an instrument of foreign policy?
+
+64
+00:04:09,788 --> 00:04:13,095
+Discuss with reference to the Indus Waters Treaty.
+
+65
+00:04:13,095 --> 00:04:15,299
+Build your answer in three parts.
+
+66
+00:04:15,299 --> 00:04:17,504
+First, the treaty and its record.
+
+67
+00:04:17,504 --> 00:04:21,719
+Second, India's security argument and Pakistan's legal argument.
+
+68
+00:04:21,719 --> 00:04:25,975
+Third, the options ahead, from renegotiation to restoration.
+
+69
+00:04:27,233 --> 00:04:29,436
+So, what should you watch next?
+
+70
+00:04:29,436 --> 00:04:33,567
+Number one: does the Permanent Indus Commission meet again?
+
+71
+00:04:33,567 --> 00:04:38,798
+Number two: India's hydropower projects on the Chenab, as they come online.
+
+72
+00:04:38,798 --> 00:04:44,674
+And number three: the Neutral Expert's decision on Ratle, expected in July 2027.
+
+73
+00:04:45,933 --> 00:04:52,730
+And with that, a new thread joins our relations web: India and Pakistan, Indus Waters, in abeyance.
+
+74
+00:04:52,730 --> 00:04:56,128
 Next briefing: India and Pakistan after Pahalgam.
+
+75
+00:04:56,128 --> 00:04:57,447
+See you there!
 

@@ -12,14 +12,22 @@ scenes = {k: f for k, _, f in ep.BEATS}
 bg = {k: f.bg for k, _, f in ep.BEATS}
 extra = dict(hook=1.5, tip=3.0, end=3.5); extra.update(getattr(ep, 'EXTRA', {}))
 HI = getattr(ep, 'HI', None)   # bilingual episode: {beat: Hindi narration}; captions become subtitle files
+post = None
+if hasattr(ep, 'KEYS') or hasattr(ep, 'GROUPS'):
+    from engine.fx import make_post
+    post = make_post(getattr(ep, 'GROUPS', {}), getattr(ep, 'KEYS', {}), getattr(ep, 'ANNOT', {}))
 E = Episode(ep.EP, HERE, beats, getattr(ep, 'CAPTIONS', {}), scenes, bg, extra,
-            nocap=tuple(scenes) if HI else (), chunk_caps=True)
+            nocap=tuple(scenes) if HI else (), chunk_caps=True, post=post,
+            crf=str(getattr(ep, 'CRF', 20)), preset=getattr(ep, 'PRESET', 'veryfast'))
 cmd = sys.argv[1]
 if cmd == 'tts':
-    from engine import tts; os.makedirs('vo', exist_ok=True); tts.run(beats, sys.argv[2])
+    from engine import tts; os.makedirs('vo', exist_ok=True)
+    V = getattr(ep, 'VOICE_EN', {})   # optional per-episode delivery: length, noise, gaps
+    tts.run(beats, sys.argv[2], 'vo', V.get('length', 1.22), V.get('noise', (0.55, 0.7)), V.get('gaps', (0.55, 0.35)))
 elif cmd == 'tts-hi':
     from engine import tts; os.makedirs('vo_hi', exist_ok=True)
-    tts.run([(k, HI[k]) for k, _ in beats], sys.argv[2], 'vo_hi', float(sys.argv[3]) if len(sys.argv) > 3 else 1.0)
+    V = getattr(ep, 'VOICE_HI', {})
+    tts.run([(k, HI[k]) for k, _ in beats], sys.argv[2], 'vo_hi', V.get('length', 1.0), V.get('noise', (0.55, 0.7)), V.get('gaps', (0.55, 0.35)))
 elif cmd == 'audio' and HI:
     from engine.bimix import build2
     build2(E.timeline(), getattr(ep, 'FX', []), HI, f'Wa{ep.EP:02d}')

@@ -3,9 +3,9 @@ import numpy as np
 from piper import PiperVoice
 from piper.config import SynthesisConfig
 
-def run(beats, voice_path, outdir='vo', length_scale=1.22):
+def run(beats, voice_path, outdir='vo', length_scale=1.22, noise=(0.55, 0.7), gaps=(0.55, 0.35)):
     v = PiperVoice.load(voice_path)
-    cfg = SynthesisConfig(length_scale=length_scale, noise_scale=0.55, noise_w_scale=0.7)
+    cfg = SynthesisConfig(length_scale=length_scale, noise_scale=noise[0], noise_w_scale=noise[1])
     SR = v.config.sample_rate
     def synth(t):
         b = io.BytesIO()
@@ -22,7 +22,7 @@ def run(beats, voice_path, outdir='vo', length_scale=1.22):
             if len(nz): a = a[max(0, nz[0]-800): nz[-1]+1600]
             out.append(a)
             if j < len(parts)-1:
-                out.append(np.zeros(int(SR*(0.55 if p.endswith(('.', '?', '!', '।')) else 0.35)), np.int16))
+                out.append(np.zeros(int(SR*(gaps[0] if p.endswith(('.', '?', '!', '।')) else gaps[1])), np.int16))
         a = np.concatenate(out)
         with wave.open(f"{outdir}/{i:02d}_{k}.wav", "wb") as w:
             w.setnchannels(1); w.setsampwidth(2); w.setframerate(SR); w.writeframes(a.tobytes())

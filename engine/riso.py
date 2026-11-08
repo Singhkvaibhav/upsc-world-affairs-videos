@@ -114,7 +114,8 @@ def inktext(ctx, s, x, y, size, ink, a=1., settle=1., seed=0, weight='black', al
     face(ctx, size, weight)
     e = ctx.text_extents(s)
     xx = x - (e.x_advance/2 if align == 'c' else e.x_advance if align == 'r' else 0)
-    ctx.save(); ctx.set_operator(cairo.OPERATOR_MULTIPLY)
+    ctx.save()
+    if ink != R['paper']: ctx.set_operator(cairo.OPERATOR_MULTIPLY)
     if second is not None:
         dx, dy = mis(seed, settle)
         ctx.move_to(xx+dx+3, y+dy+2); ctx.text_path(s); rgba(ctx, second, .35*a); ctx.fill()

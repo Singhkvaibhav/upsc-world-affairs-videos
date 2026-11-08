@@ -239,7 +239,7 @@ def statement(num, stmt, verdict, reason, flip_cue):
             pulse = .5 + .5*math.sin(t*5)
             txt(ctx, 'TRUE  or  FALSE ?', cx, cy+ch/2-60, 34, R['grey'], a*(.6+.4*pulse), 'bold', 'c', mono=True)
         else:
-            riso(ctx, lambda: rrect(ctx, cx-cw/2, cy-ch/2, cw, ch, 20), ink, a, second=R['coral'] if ink == R['teal'] else R['teal'], settle=seg(t, tf+.5, tf+1.2))
+            riso(ctx, lambda: rrect(ctx, cx-cw/2, cy-ch/2, cw, ch, 20), ink, a)
             inktext(ctx, verdict, cx, cy-40, 170, R['paper'], a, weight='black', align='c')
             para(ctx, reason, cx, cy+80, 38, R['paper'], cw-140, a, align='c', weight='bold')
         ctx.restore()

@@ -32,10 +32,11 @@ def chunk_times(text, b):
     return [tuple(c) for c in res]
 
 class Episode:
-    def __init__(self, num, here, beats, captions, scenes, bg, extra, nocap=('end',), chunk_caps=False):
+    def __init__(self, num, here, beats, captions, scenes, bg, extra, nocap=('end',), chunk_caps=False, post=None, crf='20', preset='veryfast'):
         self.num, self.here, self.beats, self.captions = num, here, beats, captions
         self.scenes, self.bg, self.extra, self.nocap = scenes, bg, extra, set(nocap)
         self.chunk_caps = chunk_caps
+        self.post, self.crf, self.preset = post, crf, preset
         core.EP = num
 
     def timeline(self):
@@ -53,6 +54,7 @@ class Episode:
             b['chunks'] = chunk_times(text, b) if self.chunk_caps else None
             tl.append(b)
             t0 += D
+        self._tl = tl
         return tl
 
     def frame(self, ctx, b, t, prev_bg, next_bg):
@@ -68,6 +70,8 @@ class Episode:
                     caption(ctx, txt, a)
             else:
                 caption(ctx, b['text'], ease(seg(t, .15, .6)) * (1 - ease(seg(t, D - .45, D - .05))))
+        if self.post:            # series finishing layer: transitions, pop-ups, grain, light
+            self.post(ctx, b, t, self._tl); return
         FD = .45
         if prev_bg != self.bg[k] and t < FD:
             rgba(ctx, C['birch'], 1 - ease(t / FD)); ctx.paint()
@@ -80,7 +84,7 @@ class Episode:
         n = int(round(b['D'] * FPS))
         tmp = out.replace('.mp4', '.part.mp4')
         p = subprocess.Popen(['ffmpeg', '-y', '-loglevel', 'error', '-f', 'rawvideo', '-pix_fmt', 'bgra', '-s', f'{W}x{H}',
-                              '-r', str(FPS), '-i', '-', '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '20',
+                              '-r', str(FPS), '-i', '-', '-c:v', 'libx264', '-preset', self.preset, '-crf', self.crf,
                               '-pix_fmt', 'yuv420p', '-r', str(FPS), tmp], stdin=subprocess.PIPE)
         for f in range(n):
             ctx.save(); self.frame(ctx, b, f / FPS, prev_bg, next_bg); ctx.restore()
