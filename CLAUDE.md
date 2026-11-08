@@ -15,7 +15,7 @@ This repo makes 40 five-minute animated briefings on **current international rel
 
 ## Rules that matter most
 1. **Never render a unit before the user approves its scripts.** Write the unit's script file, commit and push it, tell the user it's ready, and **stop and wait** for approval (the user runs `/approve`). The only exceptions are Episode 1, the format sample, which you render as the test episode when the user asks, and `/build-all`: running it counts as approval for every script that passes its independent fact-check.
-2. **Approved narration is used word for word**, in both the long video and the Short. If you spot a factual problem in an approved script, flag it; don't silently change it.
+2. **Approved narration is used word for word**, in both the long video and the Short, in English and Hindi. If you spot a factual problem in an approved script, flag it; don't silently change it.
 3. **Research every script fresh, from Indian and official sources.** Use web search and open the pages you take facts from. Every episode in a script file ends with a **Sources** list (pages actually opened, with links), an **As of** month and a **Refresh by** month. Never state a figure, date, name or office-holder from memory. Use sources in this order:
    - **Government of India:** MEA statements, briefings and joint statements (mea.gov.in), PIB, PMO, ministries, Parliament answers (sansad.in), DD News, All India Radio (newsonair.gov.in), Indian missions abroad
    - **Indian research institutions:** MP-IDSA, ICWA, ORF, Gateway House, RIS
@@ -110,7 +110,7 @@ One 300 s episode per month, numbered `M2612`, `M2701`, …: a headline sheet, s
 - **WEB:** `bg_board`. The relations web in its current state; the new thread draws in with a `pluck`.
 
 ## Writing scripts for a unit
-1. **Research first.** For each episode, search the news of the last few months and open the official and reliable pages (MEA statements, government releases, court and UN documents, major news outlets). Check that the topic in `episode_plan.md` still matters; if the news has moved on, adjust the episode's angle and say so.
+1. **Research first.** For each episode, search the news of the last few months and open Indian and official pages in the order rule 3 gives. Check that the topic in `episode_plan.md` still matters; if the news has moved on, adjust the episode's angle and say so.
 2. Write `scripts/unitN_scripts.md` in exactly the format of `sample_ep01.md`: a header line (Passport stamp · Web thread · As of · Refresh by), the long-video table following the eight segments, the Short table, then **Sources** and **Fact check before rendering**.
 3. Every episode has a memory tip, a Where they stand section with each position attributed, two Prelims statements with clear answers, and a Mains question.
 4. Commit and push the script file, tell the user, and **stop** (rule 1). They may approve only some episodes. Update the Status column in `episode_plan.md` as you go.
@@ -142,7 +142,7 @@ Every long video has **two audio tracks, English and Hindi**, on one video, usin
 9. **QA** checks both audio tracks are present and exactly 300 s, both subtitle files exist, the Hindi Short exists, and the Hindi subtitles are real Devanagari (not boxes or question marks).
 
 ## Setup notes
-- Run `bash setup.sh` once. It installs pycairo, piper-tts and numpy, and downloads the narrator voice from **GitHub releases** to `voice/`. Hugging Face is usually blocked, so don't try it.
+- Run `bash setup.sh` once. It installs pycairo, piper-tts and numpy, and downloads the English narrator voice from **GitHub releases** to `voice/`. Hugging Face is usually blocked; for the Hindi voice, follow item 4 of **Bilingual audio**.
 - The voice model is 16 kHz; the audio mix resamples it to 44.1 kHz.
 - Use the same narrator voice as the other series, so the channel sounds consistent.
 - Lessons from earlier series: animation that is too static (fix with the Motion rules), keep labels clear of pins and markers, make the recurring world (here, the passport and the web) a main visual and not a small inset, make sure on-screen numbers and dates match the narration exactly, make thumbnails as designed images (an earlier series shipped blank ones), and never render scripts the user hasn't approved.
