@@ -26,3 +26,4 @@ STOP_QUEUE
 **/*.m4a
 !output/hindi/*.m4a
 engine/data/india_official_src.jpg
+**/final_small.mp4
