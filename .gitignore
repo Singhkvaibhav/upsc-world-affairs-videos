@@ -16,3 +16,13 @@ queue.log
 STOP_QUEUE
 **/*.srt
 !output/*.srt
+
+**/vo_hi/
+**/chk/
+**/stills/
+**/video.mp4
+**/final.mp4
+**/concat.txt
+**/*.m4a
+!output/hindi/*.m4a
+engine/data/india_official_src.jpg

@@ -11,10 +11,18 @@ beats = [(k, n) for k, n, _ in ep.BEATS]
 scenes = {k: f for k, _, f in ep.BEATS}
 bg = {k: f.bg for k, _, f in ep.BEATS}
 extra = dict(hook=1.5, tip=3.0, end=3.5); extra.update(getattr(ep, 'EXTRA', {}))
-E = Episode(ep.EP, HERE, beats, getattr(ep, 'CAPTIONS', {}), scenes, bg, extra, nocap=(), chunk_caps=True)
+HI = getattr(ep, 'HI', None)   # bilingual episode: {beat: Hindi narration}; captions become subtitle files
+E = Episode(ep.EP, HERE, beats, getattr(ep, 'CAPTIONS', {}), scenes, bg, extra,
+            nocap=tuple(scenes) if HI else (), chunk_caps=True)
 cmd = sys.argv[1]
 if cmd == 'tts':
     from engine import tts; os.makedirs('vo', exist_ok=True); tts.run(beats, sys.argv[2])
+elif cmd == 'tts-hi':
+    from engine import tts; os.makedirs('vo_hi', exist_ok=True)
+    tts.run([(k, HI[k]) for k, _ in beats], sys.argv[2], 'vo_hi', float(sys.argv[3]) if len(sys.argv) > 3 else 1.0)
+elif cmd == 'audio' and HI:
+    from engine.bimix import build2
+    build2(E.timeline(), getattr(ep, 'FX', []), HI, f'Wa{ep.EP:02d}')
 elif cmd == 'audio':
     from engine.audiomix import build
     fx = [('chime', 'tip', 0.4), ('click', 'end', 3.2)]

@@ -40,13 +40,16 @@ class Episode:
 
     def timeline(self):
         d = json.load(open(os.path.join(self.here, 'vo/durs.json')))
-        base = {k: LEAD + d[k] + self.extra.get(k, 0) for k, _ in self.beats}
+        hp = os.path.join(self.here, 'vo_hi/durs.json')
+        dh = json.load(open(hp)) if os.path.exists(hp) else {}
+        # bilingual: each beat lasts as long as the longer of its English and Hindi lines
+        base = {k: LEAD + max(d[k], dh.get(k, 0)) + self.extra.get(k, 0) for k, _ in self.beats}
         tail = (TOTAL - sum(base.values())) / len(self.beats)
         tl, t0 = [], 0.
         for i, (k, txt) in enumerate(self.beats):
             D = round((base[k] + tail) * FPS) / FPS
             text = self.captions.get(k, txt)
-            b = dict(i=i, k=k, start=t0, D=D, vo=d[k], text=text, narr=txt)
+            b = dict(i=i, k=k, start=t0, D=D, vo=d[k], vo_hi=dh.get(k), text=text, narr=txt)
             b['chunks'] = chunk_times(text, b) if self.chunk_caps else None
             tl.append(b)
             t0 += D
