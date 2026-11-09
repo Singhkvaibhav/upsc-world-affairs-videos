@@ -37,6 +37,7 @@ This series is part of the **GyaanXstudios** channel. Build our own recognisable
 **Writing rules that follow from this:**
 - **Concrete dates, never relative time.** Say "on 23 April 2025", not "sixteen months ago", "last year", "recently" or "today", so an episode never goes stale.
 - **No chant lines** such as "Say it with me". State the memory tip once, clearly, and show it on screen.
+- **Subscribe ask: once, at the very end, neutral.** One sentence after the "Next …" line, tied to what the viewer gets, for example "To catch it when it's out, subscribe to Gyaan-X Studios." (Hindi: "इसे आते ही देखने के लिए, ज्ञान-एक्स स्टूडियोज़ को सब्सक्राइब कीजिए।"). On screen, a small ink card reading "SUBSCRIBE · GyaanXstudios" in the series' own style, with no YouTube logo or red play button. Never at the start or mid-episode; no "smash/hit that button", no guilt or begging, and no lists of likes, comments and bells. Shorts end with "The full episode is on Gyaan-X Studios. Subscribe to catch the next one." Write the name as "Gyaan-X Studios" in narration so the voice says it clearly.
 - **Mistakes:** if an error is found after publishing, add a correction line to the video's YouTube description, log it in `scripts/corrections.md` (date, episode, what was wrong, the fix), and fix it in the next re-render.
 
 ## Rules that matter most

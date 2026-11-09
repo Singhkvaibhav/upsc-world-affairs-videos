@@ -9,7 +9,7 @@ from engine.web import passport_stamp, relations_web
 EP = 1
 TITLE = 'The_Indus_Waters_Treaty_in_Abeyance'
 NAME = 'The Indus Waters Treaty in abeyance'
-EXTRA = {'hook': .5, 'tip': 1.0, 'end': 1.5}
+EXTRA = {'hook': .5, 'tip': 1.0, 'end': 2.0}
 VOICE_EN = {'length': 0.98, 'noise': (0.72, 0.85), 'gaps': (0.38, 0.22)}   # brighter, more energetic delivery
 VOICE_HI = {'length': 0.86, 'noise': (0.72, 0.85), 'gaps': (0.38, 0.22)}
 CRF, PRESET = 17, 'medium'                                                # premium encode
@@ -270,8 +270,8 @@ BEATS = [
          ('Hydropower projects on the Chenab', 'AS THEY COME ONLINE'),
          ("The Neutral Expert's decision on Ratle", 'EXPECTED JULY 2027')],
         ['Number one', 'Number two', 'And number three'])),
- ('end', "And with that, a new thread joins our relations web: India and Pakistan, Indus Waters, in abeyance. Next briefing: India and Pakistan after Pahalgam. See you there!",
-  relations_web(EP, 'a new thread', 'INDIA AND PAKISTAN AFTER PAHALGAM', 'Next briefing')),
+ ('end', "And with that, a new thread joins our relations web: India and Pakistan, Indus Waters, in abeyance. Next briefing: India and Pakistan after Pahalgam. To catch it when it's out, subscribe to Gyaan-X Studios.",
+  relations_web(EP, 'a new thread', 'INDIA AND PAKISTAN AFTER PAHALGAM', 'Next briefing', 'subscribe')),
 ]
 
 # scenes in the same group continue without a wipe
@@ -318,7 +318,7 @@ HI = {
  'q2': "अगला: इस संधि में विश्व बैंक ने मध्यस्थता की थी। सही! स्टैम्प याद है, तो ये नंबर पक्के।",
  'mains': "और मेन्स के लिए, यह सवाल अभ्यास कीजिए: क्या पानी विदेश नीति का एक साधन हो सकता है? सिंधु जल संधि के संदर्भ में चर्चा कीजिए। जवाब तीन हिस्सों में बनाइए। पहला, संधि और उसका रिकॉर्ड। दूसरा, भारत का सुरक्षा तर्क और पाकिस्तान का क़ानूनी तर्क। तीसरा, आगे के विकल्प, पुनर्वार्ता से लेकर बहाली तक।",
  'watch': "नवंबर 2026 की स्थिति में, आगे इन बातों पर नज़र रखिए। नंबर एक: क्या स्थायी सिंधु आयोग की फिर से बैठक होती है? नंबर दो: चिनाब पर भारत की पनबिजली परियोजनाएँ, जैसे-जैसे वे शुरू होती हैं। और नंबर तीन: रतले पर तटस्थ विशेषज्ञ का फ़ैसला, जो जुलाई 2027 में आने की उम्मीद है।",
- 'end': "और इसके साथ, हमारे रिलेशन्स वेब में एक नया धागा जुड़ता है: भारत और पाकिस्तान, सिंधु जल, स्थगित। अगली ब्रीफ़िंग: पहलगाम के बाद भारत और पाकिस्तान। वहाँ मिलते हैं!",
+ 'end': "और इसके साथ, हमारे रिलेशन्स वेब में एक नया धागा जुड़ता है: भारत और पाकिस्तान, सिंधु जल, स्थगित। अगली ब्रीफ़िंग: पहलगाम के बाद भारत और पाकिस्तान। इसे आते ही देखने के लिए, ज्ञान-एक्स स्टूडियोज़ को सब्सक्राइब कीजिए।",
 }
 
 # sound: whoosh on every wipe, blip on every pop-up, stamp, riser, verdict dings, pluck

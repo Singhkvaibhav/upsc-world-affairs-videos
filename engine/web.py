@@ -72,7 +72,7 @@ def passport_stamp(lines, ep, slam_cue, line_cues, title=''):
     return _bg(f, 'sheet')
 
 # ---------- relations web ----------
-def relations_web(ep, draw_cue, next_line, next_cue):
+def relations_web(ep, draw_cue, next_line, next_cue, sub_cue=None):
     def f(ctx, t, D):
         bg_board(ctx)
         a_out = outro(t, D, .6)
@@ -107,6 +107,8 @@ def relations_web(ep, draw_cue, next_line, next_cue):
             a = ease(nq)*a_out
             riso(ctx, lambda: rrect(ctx, 0, 870, W*eoc(nq), 90, 0), R['char'], a)
             txt(ctx, 'NEXT BRIEFING  ·  ' + next_line, 80, 928, 34, R['paper'], a, 'bold', mono=True)
+        if sub_cue:
+            subscribe_card(ctx, t, T(sub_cue) if isinstance(sub_cue, str) else sub_cue, a_out)
     return _bg(f, 'board')
 
 def _thread(ctx, x0, y0, x1, y1, p, ink, a, w=4):
@@ -120,3 +122,21 @@ def _thread(ctx, x0, y0, x1, y1, p, ink, a, w=4):
         x = (1-s)**2*x0 + 2*(1-s)*s*mx + s*s*x1; y = (1-s)**2*y0 + 2*(1-s)*s*my + s*s*y1
         ctx.line_to(x, y)
     ctx.stroke(); ctx.restore()
+
+
+def subscribe_card(ctx, t, t0, a_out=1., x=1530, y=760):
+    """the channel's end card: a small ink card, no platform logos"""
+    q = seg(t, t0, t0 + .5)
+    if q <= 0: return
+    s = eob(q, 1.8); a = ease(q*2)*a_out
+    ctx.save(); ctx.translate(x, y); ctx.rotate(-.03); ctx.scale(s, s)
+    riso(ctx, lambda: rrect(ctx, -230, -62, 460, 124, 14), R['paper'], a)   # opaque base so nothing shows through
+    riso(ctx, lambda: rrect(ctx, -230, -62, 460, 124, 14), R['coral'], a)
+    # simple bell
+    ctx.save(); ctx.translate(-170, 0); ctx.rotate(.18*math.sin((t - t0)*9)*max(0, 1 - (t - t0)/1.5))
+    riso(ctx, lambda: (ctx.move_to(-22, 18), ctx.curve_to(-22, -30, 22, -30, 22, 18), ctx.close_path()), R['paper'], a)
+    riso(ctx, lambda: ctx.arc(0, 24, 6, 0, 2*math.pi), R['paper'], a)
+    ctx.restore()
+    txt(ctx, 'SUBSCRIBE', -120, -6, 42, R['paper'], a, 'black')
+    txt(ctx, 'GyaanXstudios', -120, 36, 24, R['paper'], a, 'bold', mono=True)
+    ctx.restore()
