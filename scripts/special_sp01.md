@@ -4,7 +4,7 @@
 
 **Passport stamp:** "MICE · MONEY · IDEOLOGY · COMPROMISE · EGO" · **Web thread:** India ↔ US: "AI chips · compute and controls" · **As of:** 9 November 2026 · **Refresh by:** December 2026 (after the House meeting and any findings of the board investigation)
 
-**Length:** 600 s (a special, double the usual 300 s). English narration about 1,390 words.
+**Length:** 600 s (a special, double the usual 300 s). English narration about 1,470 words (about 2.4 words a second, close to Episode 1's pace).
 
 **Handling notes (read before approving):**
 - The spy allegation is **reported, not proven**, and nobody has been charged. Every claim is attributed to whoever makes it, on equal-sized cards: the reports, Nvidia, China, Megaspeed and Singapore.
