@@ -13,6 +13,32 @@ This repo makes 40 five-minute animated briefings on **current international rel
 - Finished files: `output/` (long videos) and `output/shorts/` (Shorts)
 - Commands: `.claude/commands/` (`/build-look`, `/make-episode`, `/write-scripts`, `/approve`, `/status`, `/build-all`, `/refresh`)
 
+## GyaanXstudios: editorial identity (applies to every episode and script)
+This series is part of the **GyaanXstudios** channel. Build our own recognisable identity; never imitate another show's name, catchphrases, set or presenter.
+
+| | GyaanXstudios |
+| --- | --- |
+| Presenter | A strong, professional narrator (no on-camera presenter) |
+| Format | Animated storytelling |
+| Main focus | UPSC concepts and knowledge (current affairs where they teach a concept) |
+| Context | Historical, scientific and conceptual |
+| Visuals | Animation-led: maps, diagrams, timelines |
+| Learning | Understand **and remember** concepts (a memory tip in every episode) |
+| Examination | Prelims application and MCQs, plus a Mains frame, in every episode |
+| Duration | Concise five-minute episodes |
+
+**Five principles for every script:**
+1. **Always explain why.** Don't just state what happened or what a rule says; say why it happened or why it exists.
+2. **Connect the dots.** Link geography, history, economy and politics wherever they meet.
+3. **Use stories.** Every concept has a narrative or a central question that the episode answers.
+4. **Respect the audience.** Simple language, never shallow information.
+5. **Be trustworthy.** Verify facts, acknowledge mistakes, and distinguish evidence from opinion ("the treaty says…" vs "India argues…", "historians disagree…").
+
+**Writing rules that follow from this:**
+- **Concrete dates, never relative time.** Say "on 23 April 2025", not "sixteen months ago", "last year", "recently" or "today", so an episode never goes stale.
+- **No chant lines** such as "Say it with me". State the memory tip once, clearly, and show it on screen.
+- **Mistakes:** if an error is found after publishing, add a correction line to the video's YouTube description, log it in `scripts/corrections.md` (date, episode, what was wrong, the fix), and fix it in the next re-render.
+
 ## Rules that matter most
 1. **Never render a unit before the user approves its scripts.** Write the unit's script file, commit and push it, tell the user it's ready, and **stop and wait** for approval (the user runs `/approve`). The only exceptions are Episode 1, the format sample, which you render as the test episode when the user asks, and `/build-all`: running it counts as approval for every script that passes its independent fact-check.
 2. **Approved narration is used word for word**, in both the long video and the Short, in English and Hindi. If you spot a factual problem in an approved script, flag it; don't silently change it.
@@ -73,7 +99,7 @@ The user wants **richer animation than the earlier series**. Static slides with 
 - **Check motion, not just stills.** For each episode, also render a 15-second 540p preview of its busiest segment and look at 6 frames sampled 0.3 s apart, to confirm things actually move smoothly.
 
 ## Tone and finish (the user asked for this on 8 November 2026)
-- **Enthusiastic, explainer-style narration.** Short sentences, direct questions to the viewer ("So why does it matter?", "Think about it."), a clear twist moment, numbered points ("One… Two… And three…"), and a "Say it with me" line for the memory tip. Stay factual and neutral: energy comes from pace and clarity, never from loaded words. Follow the Episode 1 script (`scripts/sample_ep01.md`) as the model.
+- **Enthusiastic, explainer-style narration.** Short sentences, direct questions to the viewer ("So why does it matter?", "Think about it."), a clear twist moment, numbered points ("One… Two… And three…"), and the memory tip stated once, clearly (no chant lines). Stay factual and neutral: energy comes from pace and clarity, never from loaded words. Follow the Episode 1 script (`scripts/sample_ep01.md`) as the model.
 - **Delivery:** set `VOICE_EN = {'length': 0.98, 'noise': (0.72, 0.85), 'gaps': (0.38, 0.22)}` and `VOICE_HI = {'length': 0.86, ...}` in each `ep.py`, as in Episode 1.
 - **Explainer marker layer:** live-drawn coral marker circles, underlines and arrows over the key element as the narration reaches it (`ANNOT` in `ep.py`, drawn by `engine/fx.py`). Two to eight per episode. This borrows a common explainer technique; never copy any show's name, catchphrase, set or presenter.
 - **Keyword pop-ups:** bold ink stickers for the key number or term at the moment it's said (`KEYS` in `ep.py`), bottom right, above the subtitle area.
