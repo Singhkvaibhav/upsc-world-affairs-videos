@@ -74,3 +74,8 @@ Status: **to script** · **sample script (approve)** · **scripted** = approved 
 | # | Month | Status |
 | --- | --- | --- |
 | M2612 | December 2026 | to script |
+
+## Specials
+| # | Title | Web thread | Refresh by | Status |
+| --- | --- | --- | --- | --- |
+| SP01 | Nvidia, Jensen Huang and the honey-trap question | India ↔ US: "AI chips · compute and controls" | December 2026 | script (approve) |
