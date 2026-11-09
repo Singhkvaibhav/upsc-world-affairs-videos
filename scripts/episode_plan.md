@@ -78,4 +78,4 @@ Status: **to script** · **sample script (approve)** · **scripted** = approved 
 ## Specials
 | # | Title | Web thread | Refresh by | Status |
 | --- | --- | --- | --- | --- |
-| SP01 | Nvidia, Jensen Huang and the honey-trap question (10 min) | India ↔ US: "AI chips · compute and controls" | December 2026 | script (approve) |
+| SP01 | Nvidia, Jensen Huang and the honey-trap question (11:30) | India ↔ US: "AI chips · compute and controls" | December 2026 | done (video delivered in chat; too large for GitHub) |

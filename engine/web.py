@@ -16,12 +16,13 @@ PARTNERS = {   # loose direction around India; no map shapes
     'US': (-760, -260), 'EU': (-560, -340), 'Russia': (-260, -380), 'Gulf': (-620, 120),
     'Japan': (720, -230), 'ASEAN': (560, 220), 'Africa': (-380, 330), 'Sri Lanka': (120, 330),
 }
-THREADS = {   # episode -> (partner, label)
+THREADS = {   # episode -> (partner, label); specials use a half number so they sort between episodes
     1: ('Pakistan', 'Indus Waters · in abeyance'),
+    1.5: ('US', 'AI chips · compute and controls'),
 }
 
 # ---------- passport ----------
-def passport_stamp(lines, ep, slam_cue, line_cues, title=''):
+def passport_stamp(lines, ep, slam_cue, line_cues, title='', label=None):
     def f(ctx, t, D):
         bg_sheet(ctx)
         a_out = outro(t, D)
@@ -34,7 +35,7 @@ def passport_stamp(lines, ep, slam_cue, line_cues, title=''):
             xx = x0 + side*pw/2
             riso(ctx, lambda: rrect(ctx, xx+6, y0, pw/2-12, ph, 10), R['paper'], a_out)
             halftone(ctx, lambda: rrect(ctx, xx+6, y0, pw/2-12, ph, 10), R['tealpale'], .35*a_out, step=14, r=1.6, angle=.8)
-            txt(ctx, f'PAGE {ep*2-1+side:02d}', xx+40, y0+ph-34, 18, R['grey'], a_out, mono=True)
+            txt(ctx, f'PAGE {int(ep*2-1+side):02d}', xx+40, y0+ph-34, 18, R['grey'], a_out, mono=True)
         rgba(ctx, R['char'], .3*a_out); ctx.rectangle(x0+pw/2-1, y0, 2, ph); ctx.fill()
         # earlier stamps (faded small) on left page
         for e, ls in STAMPS.items():
@@ -62,7 +63,7 @@ def passport_stamp(lines, ep, slam_cue, line_cues, title=''):
             ctx.set_operator(cairo.OPERATOR_MULTIPLY)
             rgba(ctx, R['violet'], a); ctx.set_line_width(9); rrect(ctx, -330, -230, 660, 460, 30); ctx.stroke()
             ctx.set_line_width(3); rrect(ctx, -308, -208, 616, 416, 22); ctx.stroke()
-            txt(ctx, f'EPISODE {ep} · {title}', 0, -160, 24, R['violet'], a, 'bold', 'c', mono=True)
+            txt(ctx, (label or f'EPISODE {ep}') + f' · {title}', 0, -160, 24, R['violet'], a, 'bold', 'c', mono=True)
             for i, l in enumerate(lines):
                 c0 = line_cues[i]; t0 = T(c0) if isinstance(c0, str) else c0
                 la = ease(seg(t, t0, t0+.3))*a
@@ -72,14 +73,14 @@ def passport_stamp(lines, ep, slam_cue, line_cues, title=''):
     return _bg(f, 'sheet')
 
 # ---------- relations web ----------
-def relations_web(ep, draw_cue, next_line, next_cue, sub_cue=None):
+def relations_web(ep, draw_cue, next_line, next_cue, sub_cue=None, label=None):
     def f(ctx, t, D):
         bg_board(ctx)
         a_out = outro(t, D, .6)
-        cable(ctx, t, f'RELATIONS WEB · AFTER EPISODE {ep}', a_out, core.EP)
+        cable(ctx, t, f'RELATIONS WEB · AFTER {label or "EPISODE " + str(ep)}', a_out, core.EP)
         cx, cy = W/2, 560
         ctx.save(); camera(ctx, t, D, (1.08, 1.0), cx=cx, cy=cy)
-        partner, label = THREADS[ep]
+        partner, tlabel = THREADS[ep]
         # existing threads from earlier episodes
         for e, (pn, lab) in THREADS.items():
             if e >= ep: continue
@@ -98,7 +99,7 @@ def relations_web(ep, draw_cue, next_line, next_cue, sub_cue=None):
             _thread(ctx, cx, cy, cx+px, cy+py, q, R['coral'], a_out, w=7)
             if q > .7:
                 mx, my = cx + px*.5, cy + py*.5 - 70
-                tag(ctx, mx, my, label.upper(), R['coral'], ease(seg(t, td+.8, td+1.2))*a_out, 22, align='c')
+                tag(ctx, mx, my, tlabel.upper(), R['coral'], ease(seg(t, td+.8, td+1.2))*a_out, 22, align='c')
         token(ctx, cx, cy, 'INDIA', R['teal'], a_out, r=86, size=32)
         ctx.restore()
         tn = T(next_cue) if isinstance(next_cue, str) else next_cue

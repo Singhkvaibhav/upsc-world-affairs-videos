@@ -166,7 +166,7 @@ def cable(ctx, t, line, a=1., ep=1):
     rgba(ctx, R['char'], .85*a); ctx.rectangle(70, 104, W-140, 2.5); ctx.fill()
     s = typed(line, seg(t, .1, 1.3))
     txt(ctx, s, 70, 86, 22, R['char'], .85*a, 'bold', mono=True)
-    tag = f'WORLD AFFAIRS · EP {ep}'
+    tag = f'WORLD AFFAIRS · {ep}' if isinstance(ep, str) else f'WORLD AFFAIRS · EP {ep}'
     txt(ctx, tag, W-70, 86, 22, R['teal'], .9*a, 'bold', align='r', mono=True)
 
 def credit(ctx, s, a=1.):

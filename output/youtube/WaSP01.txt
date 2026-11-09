@@ -1,0 +1,57 @@
+=== ENGLISH ===
+TITLE
+Nvidia, Jensen Huang and the Honey-Trap Question | GPUs, HBM Memory and the AI Buildout | UPSC Special
+
+DESCRIPTION
+As of 9 November 2026. On 8 November 2026, Nvidia's board opened an independent investigation into its founder, Jensen Huang, after reports that he was the target of a Chinese intelligence effort. This special explains who Jensen Huang is (as he told it on The Joe Rogan Experience #2422), what a GPU is and why AI needs one, why memory makers like SK Hynix, Samsung and Micron matter, what the allegations are and what each side says, what it could mean for the AI buildout, and why it matters for India.
+
+The allegations are reported, not proven, and no one has been charged. Every claim is attributed to the side that makes it.
+
+Memory tip: MICE (Money, Ideology, Compromise, Ego). A honey trap works through compromise.
+
+CHAPTERS
+0:00 The headline
+0:18 Four questions
+0:36 Chapter 1: The man
+1:36 Chapter 2: The machine (what a GPU is)
+2:57 Chapter 3: The wave (CUDA, AlexNet, OpenAI, $5 trillion)
+4:01 Chapter 4: The memory wall (DRAM, NAND, HBM)
+5:22 Who makes what, and India's Sanand link
+5:57 Chapter 5: The honey-trap question
+7:35 Chapter 6: The fallout for the AI buildout
+8:53 Chapter 7: India's stake
+9:42 Memory tip: MICE
+10:03 Exam desk: Prelims and Mains
+10:58 Watchlist
+
+SOURCES (pages opened; As of 9 November 2026)
+- Business Standard, 9 Nov 2026: Nvidia's shares slide as chip giant probes CEO Huang over spy claims — https://www.business-standard.com/markets/news/nvidia-s-shares-slide-as-chip-giant-probes-ceo-huang-over-spy-claims-126110900547_1.html
+- Business Standard, 9 Nov 2026: Huang's grip on Nvidia may pose challenge to board's probe — https://www.business-standard.com/companies/news/huang-s-grip-on-nvidia-may-pose-challenge-to-board-s-probe-into-his-affair-126110901614_1.html
+- Business Standard, 9 Nov 2026: Who is Alice Huang — https://www.business-standard.com/world-news/who-is-alice-huang-power-broker-or-alleged-chinese-spy-linked-to-nvidia-126110901581_1.html
+- Business Standard, 29 Oct 2026: US intelligence links Nvidia CEO contact to China spying concerns (report) — https://business-standard.com/world-news/us-intelligence-links-nvidia-ceo-contact-to-china-spying-concerns-report-126102901145_1.html
+- ThePrint, 29 Oct 2026 — https://theprint.in/feature/nvidia-jensen-huang-close-relationship-chinese-spy-report/3085391/
+- Open, 1 Nov 2026: seven things to know — https://openthemagazine.com/business/quick-take-nvidias-china-spy-row-seven-things-to-know-about-jensen-huangs-tightrope
+- Open, 1 Nov 2026: Nvidia's China tightrope — https://openthemagazine.com/business/explained-nvidias-china-tightrope-can-jensen-huang-keep-trump-and-beijing-on-side
+- Business Standard, 29 Oct 2025: Nvidia passes $5 trillion — https://www.business-standard.com/companies/news/nvidia-storms-past-5-trillion-valuation-as-ai-boom-powers-meteoric-rise-125102901363_1.html
+- News On AIR, 28 Feb 2026: Micron's Sanand facility — https://www.newsonair.gov.in/pm-modi-to-inaugurate-micron-technologys-state-of-the-art-semiconductor-atmp-facility-in-gujarat/
+- Outlook, 15 Jul 2026: SK Hynix expects AI memory shortage beyond 2030 — https://respawn.outlookindia.com/gaming/gaming-news/sk-hynix-expects-ai-memory-shortage-beyond-2030
+- PIB, 7 Mar 2024: Cabinet approves IndiaAI Mission — https://pib.gov.in/PressReleasePage.aspx?PRID=2012355
+- Fortune, 5 Dec 2025: Jensen Huang on the Joe Rogan podcast — https://fortune.com/2025/12/05/jensen-huang-nine-year-old-janitor-before-nvidia-joe-rogan-podcast
+- Fortune, 9 Nov 2026: board probe and earlier statements — https://fortune.com/2026/11/09/nvidia-board-probe-jensen-huang-affair-suspected-china-spy-statements/
+- Tom's Hardware, 7 Nov 2026: Huang called to Congress — https://www.tomshardware.com/tech-industry/big-tech/nvidias-jensen-huang-officially-called-to-congress-due-to-reports-of-a-chinese-spy-plot-officials-mention-growing-concerns-over-national-security
+
+Map of India: Survey of India (official depiction). Other maps are schematic, not to scale, boundaries not shown.
+Audio: English and Hindi (choose in the player's audio track settings).
+
+#UPSC #Nvidia #JensenHuang #GPU #HBM #Semiconductors #AI #InternalSecurity #CurrentAffairs #GyaanXstudios
+
+=== HINDI ===
+TITLE
+Nvidia, जेन्सन हुआंग और हनी ट्रैप का सवाल | GPU, HBM मेमोरी और AI का विस्तार | UPSC स्पेशल
+
+DESCRIPTION
+9 नवंबर 2026 की स्थिति। 8 नवंबर 2026 को Nvidia के बोर्ड ने अपने संस्थापक जेन्सन हुआंग के ख़िलाफ़ स्वतंत्र जाँच शुरू की, उन ख़बरों के बाद कि वे चीनी ख़ुफ़िया अभियान का निशाना थे। इस स्पेशल में: जेन्सन हुआंग कौन हैं, GPU क्या है और AI को इसकी ज़रूरत क्यों है, SK Hynix, Samsung और Micron जैसी मेमोरी कंपनियाँ क्यों अहम हैं, आरोप क्या हैं और हर पक्ष क्या कहता है, AI के विस्तार पर असर, और भारत के लिए इसका महत्व।
+
+आरोप ख़बरों पर आधारित हैं, साबित नहीं हुए हैं, और किसी पर आरोप तय नहीं हुए हैं।
+
+मेमोरी टिप: MICE (Money, Ideology, Compromise, Ego)। हनी ट्रैप Compromise के ज़रिए काम करता है।

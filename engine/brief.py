@@ -190,6 +190,27 @@ def _icon(ctx, kind, x, y, t, a, ink):
         riso(ctx, lambda: (ctx.move_to(x+90, y+30), ctx.line_to(x+120, y+66), ctx.line_to(x+78, y+88), ctx.close_path()), R['river'], a)
         tag(ctx, x-110, y-110, 'UPSTREAM: CHINA', R['coral'], a, 16)
         tag(ctx, x+10, y+120, 'DOWNSTREAM: INDIA', R['teal'], a, 16)
+    elif kind == 'chip':
+        riso(ctx, lambda: rrect(ctx, x-80, y-80, 160, 160, 14), ink, a, second=R['coral'])
+        for k in range(5):
+            for sgn in (-1, 1):
+                rgba(ctx, R['char'], a); ctx.rectangle(x-64+k*30, y+sgn*96-6, 10, 12); ctx.fill(); ctx.rectangle(x+sgn*96-6, y-64+k*30, 12, 10); ctx.fill()
+        for i in range(6):
+            for j in range(6):
+                on = .5 + .5*math.sin(t*4 + i*.9 + j*1.3)
+                rgba(ctx, R['paper'], a*(.35 + .65*on)); ctx.rectangle(x-60+i*21, y-60+j*21, 15, 15); ctx.fill()
+    elif kind == 'factory':
+        def body():
+            ctx.move_to(x-110, y+80); ctx.line_to(x-110, y-10); ctx.line_to(x-60, y-50); ctx.line_to(x-60, y-10)
+            ctx.line_to(x-10, y-50); ctx.line_to(x-10, y-10); ctx.line_to(x+40, y-50); ctx.line_to(x+40, y-10)
+            ctx.line_to(x+110, y-10); ctx.line_to(x+110, y+80); ctx.close_path()
+        riso(ctx, body, ink, a, second=R['coral'])
+        riso(ctx, lambda: rrect(ctx, x+60, y-110, 30, 100, 4), R['char'], a)
+        for k in range(3):
+            ph = (t*.6 + k/3) % 1
+            rgba(ctx, R['grey'], a*.5*(1-ph)); ctx.arc(x+75 + 20*ph, y-120 - 70*ph, 12 + 18*ph, 0, 2*math.pi); ctx.fill()
+        for k in range(4):
+            rgba(ctx, R['paper'], a); ctx.rectangle(x-90 + k*48, y+20, 26, 26); ctx.fill()
 
 def stakes(tiles):
     """tiles: [(icon, title, line, ink, cue)]"""

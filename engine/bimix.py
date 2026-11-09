@@ -100,7 +100,34 @@ def fx_sound(kind):
     if kind == 'ding':      # bright two-note answer chime
         tt = np.arange(int(1.2*SR))/SR
         return (np.sin(2*np.pi*hz(84)*tt)*np.exp(-tt*4) + .6*np.sin(2*np.pi*hz(91)*np.clip(tt-.09, 0, None))*np.exp(-np.clip(tt-.09, 0, None)*4)*(tt > .09)).astype(np.float32)
+    if kind == 'boom':      # cinematic impact: sub drop + noise burst
+        tt = np.arange(int(1.6*SR))/SR; rng = np.random.default_rng(12)
+        sub = np.sin(2*np.pi*(38 + 60*np.exp(-tt*6))*tt)*np.exp(-tt*2.2)
+        nz = rng.standard_normal(len(tt))*np.exp(-tt*14); acc = 0.; y = np.zeros(len(tt))
+        for i in range(len(tt)): acc += .08*(nz[i]-acc); y[i] = acc
+        return (sub + 2.2*y).astype(np.float32)
+    if kind == 'glitch':    # short digital stutter
+        L = int(.4*SR); rng = np.random.default_rng(13); out = np.zeros(L, np.float32)
+        for k in range(6):
+            i = int(k*.06*SR); n = int(.03*SR); f = rng.uniform(300, 1800)
+            tt = np.arange(n)/SR; out[i:i+n] += (np.sign(np.sin(2*np.pi*f*tt))*.5).astype(np.float32)*np.exp(-tt*40).astype(np.float32)
+        return out
     raise ValueError(kind)
+
+def tension_bed(t0, t1):
+    """dark spy-thriller layer: low drone, heartbeat pulse, high shimmer; fades in and out over 2 s"""
+    t = np.arange(N)/SR; out = np.zeros(N, np.float32)
+    w = np.clip((t - t0)/2, 0, 1)*np.clip((t1 - t)/2, 0, 1)
+    out += (.5*np.sin(2*np.pi*hz(38)*t) + .35*np.sin(2*np.pi*hz(45)*t*1.0007) + .2*np.sin(2*np.pi*hz(50)*t)).astype(np.float32)
+    beat = 60/72; kt = np.arange(int(.25*SR))/SR
+    hb = np.sin(2*np.pi*55*kt)*np.exp(-kt*18)
+    for k in range(int(t0/beat), int(t1/beat)+1):
+        for off, g in ((0, 1.), (.28, .6)):
+            i0 = int((k*beat + off)*SR); j = min(len(hb), N - i0)
+            if 0 <= i0 < N: out[i0:i0+j] += (hb[:j]*g*1.6).astype(np.float32)
+    out += (.06*np.sin(2*np.pi*hz(86)*t)*(.5 + .5*np.sin(2*np.pi*.15*t))).astype(np.float32)
+    out /= np.max(np.abs(out)) + 1e-9
+    return (out*w).astype(np.float32), w.astype(np.float32)
 
 def effects(tl, spec):
     st = {b['k']: b['start'] for b in tl}; bb = {b['k']: b for b in tl}; out = np.zeros(N, np.float32)
@@ -143,8 +170,12 @@ def srt(tl, texts, durkey, fn):
                 e0 = b['start'] + LEAD + d*pos/L + (0.3 if j == len(parts)-1 else 0)
                 n += 1; f.write(f"{n}\n{_ts(s0)} --> {_ts(e0)}\n{p}\n\n")
 
-def build2(tl, fx_spec, HI, name):
+def build2(tl, fx_spec, HI, name, tension=None):
     b0 = bed(); fx = effects(tl, fx_spec)
+    if tension:
+        st = {b['k']: b for b in tl}
+        tb, w = tension_bed(st[tension[0]]['start'], st[tension[1]]['start'] + st[tension[1]]['D'])
+        b0 = b0*(1 - .75*w) + tb*.9
     for lang, d in (('en', 'vo'), ('hi', 'vo_hi')):
         v = voice_track(tl, d)
         env = np.convolve(np.abs(v), np.ones(4410)/4410, mode='same')

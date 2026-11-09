@@ -6,6 +6,9 @@ sys.path.insert(0, ROOT)
 HERE = os.getcwd()
 spec = importlib.util.spec_from_file_location('ep', os.path.join(HERE, 'ep.py'))
 ep = importlib.util.module_from_spec(spec); spec.loader.exec_module(ep)
+from engine import core
+if hasattr(ep, 'TOTAL'): core.TOTAL = float(ep.TOTAL)   # specials can run longer than 300 s
+CODE = getattr(ep, 'CODE', None) or f'Wa{ep.EP:02d}'
 from engine.runner import Episode
 beats = [(k, n) for k, n, _ in ep.BEATS]
 scenes = {k: f for k, _, f in ep.BEATS}
@@ -30,7 +33,7 @@ elif cmd == 'tts-hi':
     tts.run([(k, HI[k]) for k, _ in beats], sys.argv[2], 'vo_hi', V.get('length', 1.0), V.get('noise', (0.55, 0.7)), V.get('gaps', (0.55, 0.35)))
 elif cmd == 'audio' and HI:
     from engine.bimix import build2
-    build2(E.timeline(), getattr(ep, 'FX', []), HI, f'Wa{ep.EP:02d}')
+    build2(E.timeline(), getattr(ep, 'FX', []), HI, CODE, getattr(ep, 'TENSION', None))
 elif cmd == 'audio':
     from engine.audiomix import build
     fx = [('chime', 'tip', 0.4), ('click', 'end', 3.2)]
